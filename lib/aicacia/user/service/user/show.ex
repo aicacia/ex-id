@@ -16,10 +16,12 @@ defmodule Aicacia.User.Service.User.Show do
   end
 
   def handle(%{} = command) do
-    try do
-      {:ok, Repo.get!(Model.User, command.id)}
-    rescue
-      e in Ecto.NoResultsError -> {:error, e}
+    case Repo.get(Model.User, command.id) do
+      nil ->
+        {:error, %Ecto.NoResultsError{}}
+
+      user ->
+        {:ok, user}
     end
   end
 end

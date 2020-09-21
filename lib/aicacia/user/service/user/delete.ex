@@ -16,10 +16,15 @@ defmodule Aicacia.User.Service.User.Delete do
   end
 
   def handle(%{} = command) do
-    Repo.transaction(fn ->
-      user = Repo.get!(Model.User, command.id)
-      Repo.delete!(user)
-      user
-    end)
+    case Service.User.Show.handle(command) do
+      {:ok, user} ->
+        Repo.transaction(fn ->
+          Repo.delete!(user)
+          user
+        end)
+
+      error ->
+        error
+    end
   end
 end
