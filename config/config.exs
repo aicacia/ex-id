@@ -18,13 +18,16 @@ config :phoenix, :json_library, Jason
 
 config :aicacia_user, Aicacia.User.Scheduler, debug_logging: true
 
-config :peerage, via: Peerage.Via.Dns,
-      dns_name: "localhost",
-      app_name: "aicacia_user"
+config :peerage,
+  via: Peerage.Via.Dns,
+  dns_name: "localhost",
+  app_name: "aicacia_user"
 
 config :cors_plug,
   origin: ~r/.*/,
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"]
+
+config :bcrypt_elixir, log_rounds: 12
 
 config :aicacia_user, Aicacia.User.Repo,
   username: "postgres",

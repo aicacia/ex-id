@@ -16,12 +16,8 @@ defmodule Aicacia.User.Service.User.Show do
   end
 
   def handle(%{} = command) do
-    case Repo.get(Model.User, command.id) do
-      nil ->
-        {:error, %Ecto.NoResultsError{}}
-
-      user ->
-        {:ok, user}
-    end
+    Repo.run(fn ->
+      Repo.get!(Model.User, command.id)
+    end)
   end
 end

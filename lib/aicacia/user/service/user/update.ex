@@ -16,14 +16,8 @@ defmodule Aicacia.User.Service.User.Update do
   end
 
   def handle(%{} = command) do
-    case Service.User.Show.handle(command) do
-      {:ok, user} ->
-        Repo.transaction(fn ->
-          user
-        end)
-
-      error ->
-        error
-    end
+    Repo.run(fn ->
+      Repo.get!(Model.User, command.id)
+    end)
   end
 end

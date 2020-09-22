@@ -2,9 +2,13 @@ defmodule Aicacia.User.Repo.Migrations.CreateEmails do
   use Ecto.Migration
 
   def change do
-    create table(:emails, primary_key: false) do
-      add(:id, :uuid, primary_key: true)
+    create table(:emails) do
+      add(:user_id, references(:users, type: :uuid, on_delete: :delete_all, on_update: :nothing),
+        null: false
+      )
+
       add(:email, :string, null: false)
+      add(:primary, :boolean, default: false, null: false)
       add(:confirmed, :boolean, default: false, null: false)
 
       timestamps(type: :utc_datetime)

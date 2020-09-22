@@ -1,5 +1,5 @@
 defmodule Aicacia.User.Web.Controller.UserTest do
-  use Aicacia.User.Web.ConnCase
+  use Aicacia.User.Web.Case
 
   alias Aicacia.User.Service
 

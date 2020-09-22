@@ -1,17 +1,14 @@
 defmodule Aicacia.User.MixProject do
   use Mix.Project
 
-  def organization, do:
-    :aicacia
+  def organization, do: :aicacia
 
-  def name, do:
-    :user
+  def name, do: :user
 
-  def version, do:
-    "0.1.0"
+  def version, do: "0.1.0"
 
-  def project, do:
-    [
+  def project,
+    do: [
       app: String.to_atom("#{organization()}_#{name()}"),
       version: version(),
       elixir: "~> 1.5",
@@ -22,8 +19,8 @@ defmodule Aicacia.User.MixProject do
       deps: deps()
     ]
 
-  def application, do:
-    [
+  def application,
+    do: [
       mod: {Aicacia.User.Application, []},
       extra_applications: [:logger, :runtime_tools]
     ]
@@ -43,8 +40,8 @@ defmodule Aicacia.User.MixProject do
       HELM_REPO: "http://chartmuseum.local-k8s.com"
     ]
 
-  defp deps, do:
-    [
+  defp deps,
+    do: [
       {:phoenix, "~> 1.4"},
       {:phoenix_pubsub, "~> 1.1"},
       {:postgrex, ">= 0.0.0"},
@@ -56,7 +53,8 @@ defmodule Aicacia.User.MixProject do
       {:cors_plug, "~> 2.0"},
       {:plug_cowboy, "~> 2.3"},
       {:peerage, "~> 1.0"},
-      {:distillery, "~> 2.1"}
+      {:distillery, "~> 2.1"},
+      {:bcrypt_elixir, "~> 2.0"}
     ]
 
   defp namespace(), do: "api"
@@ -82,8 +80,8 @@ defmodule Aicacia.User.MixProject do
         helm_overrides()
       } #{if values == nil, do: "", else: "--values #{values}"}"
 
-  defp aliases, do:
-    [
+  defp aliases,
+    do: [
       # Dev Postgres
       postgres: [
         "cmd mkdir -p ${PWD}/.volumes/#{name()}-postgres",

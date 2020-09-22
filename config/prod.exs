@@ -6,7 +6,8 @@ config :aicacia_user, Aicacia.User.Web.Endpoint,
 
 config :logger, level: :info
 
-config :peerage, via: Peerage.Via.Dns,
+config :peerage,
+  via: Peerage.Via.Dns,
   dns_name: "user-aicacia-user.api"
 
 config :aicacia_user, Aicacia.User.Repo,

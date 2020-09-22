@@ -1,10 +1,13 @@
 defmodule Aicacia.User.Model.Email do
   use Ecto.Schema
 
-  @primary_key {:id, :binary_id, autogenerate: true}
-  @foreign_key_type :binary_id
+  alias Aicacia.User.Model
+
   schema "emails" do
+    belongs_to(:user, Model.User, type: :binary_id)
+
     field(:email, :string, null: false)
+    field(:primary, :boolean, null: false, default: false)
     field(:confirmed, :boolean, null: false, default: false)
 
     timestamps(type: :utc_datetime)

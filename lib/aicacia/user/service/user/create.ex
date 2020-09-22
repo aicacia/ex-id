@@ -15,7 +15,7 @@ defmodule Aicacia.User.Service.User.Create do
   end
 
   def handle(%{} = _command) do
-    Repo.transaction(fn ->
+    Repo.run(fn ->
       create_user!(%{})
     end)
   end

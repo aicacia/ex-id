@@ -1,4 +1,4 @@
-defmodule Aicacia.User.Web.ConnCase do
+defmodule Aicacia.User.Web.Case do
   use ExUnit.CaseTemplate
 
   using do

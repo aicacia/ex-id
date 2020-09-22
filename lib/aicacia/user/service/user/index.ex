@@ -15,6 +15,8 @@ defmodule Aicacia.User.Service.User.Index do
   end
 
   def handle(%{} = _command) do
-    {:ok, Repo.all(Model.User)}
+    Repo.run(fn ->
+      Repo.all(Model.User)
+    end)
   end
 end
