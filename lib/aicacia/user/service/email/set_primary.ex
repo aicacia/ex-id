@@ -1,5 +1,6 @@
 defmodule Aicacia.User.Service.Email.SetPrimary do
   use Aicacia.Handler
+  import Ecto.Query
 
   alias Aicacia.User.Model
   alias Aicacia.User.Service
@@ -11,18 +12,17 @@ defmodule Aicacia.User.Service.Email.SetPrimary do
   end
 
   def changeset(%{} = attrs) do
-    %Service.Email.Confirm{}
+    %Service.Email.SetPrimary{}
     |> cast(attrs, [:user_id, :email_id])
     |> validate_required([:user_id, :email_id])
   end
 
   def handle(%{} = command) do
     Repo.run(fn ->
-      user = Repo.get!(Model.User, command.user_id)
+      from(e in Model.Email, where: e.user_id == ^command.user_id)
+      |> Repo.update_all(set: [primary: false])
 
-      Repo.update_all(Model.Email, set: [primary: false])
-
-      Repo.get_by!(Model.Email, id: command.email_id, user_id: user.id)
+      Repo.get_by!(Model.Email, id: command.email_id, user_id: command.user_id)
       |> cast(
         %{primary: true},
         [:primary]

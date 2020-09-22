@@ -50,4 +50,23 @@ defmodule Aicacia.User.Service.EmailTest do
       assert email.confirmed == true
     end
   end
+
+  describe "set primary" do
+    test "should set only one email as primary" do
+      user = Service.User.Create.handle!(%{})
+      email1 = Service.Email.Create.handle!(%{user_id: user.id, email: "example1@domain.com"})
+      email2 = Service.Email.Create.handle!(%{user_id: user.id, email: "example2@domain.com"})
+
+      email1 = Service.Email.SetPrimary.handle!(%{user_id: user.id, email_id: email1.id})
+
+      assert email1.primary == true
+
+      email2 = Service.Email.SetPrimary.handle!(%{user_id: user.id, email_id: email2.id})
+
+      email1 = Repo.get!(Model.Email, email1.id)
+
+      assert email1.primary == false
+      assert email2.primary == true
+    end
+  end
 end
