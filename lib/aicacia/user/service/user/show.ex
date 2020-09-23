@@ -1,5 +1,6 @@
 defmodule Aicacia.User.Service.User.Show do
   use Aicacia.Handler
+  import Ecto.Query
 
   alias Aicacia.User.Model
   alias Aicacia.User.Service
@@ -17,7 +18,11 @@ defmodule Aicacia.User.Service.User.Show do
 
   def handle(%{} = command) do
     Repo.run(fn ->
-      Repo.get!(Model.User, command.id)
+      from(u in Model.User,
+        where: u.id == ^command.id,
+        preload: [:emails, :password]
+      )
+      |> Repo.one!()
     end)
   end
 end

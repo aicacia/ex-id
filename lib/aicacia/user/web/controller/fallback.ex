@@ -1,11 +1,16 @@
 defmodule Aicacia.User.Web.Controller.Fallback do
   use Aicacia.User.Web, :controller
+  require Logger
 
   def call(conn, {:error, %Ecto.Changeset{} = changeset}) do
     conn
     |> put_status(:unprocessable_entity)
     |> put_view(Aicacia.User.Web.View.Changeset)
     |> render("error.json", changeset: changeset)
+  end
+
+  def call(conn, {:error, %Ecto.InvalidChangesetError{changeset: changeset}}) do
+    call(conn, {:error, changeset})
   end
 
   def call(conn, {:error, %Ecto.NoResultsError{}}) do

@@ -11,6 +11,12 @@ defmodule Aicacia.User.Web.Router do
     get "/health", HealthCheck, :health
     head "/health", HealthCheck, :health
 
-    resources "/user", User, only: [:index, :show, :create, :update, :delete]
+    scope "/sign_up", SignUp do
+      post "/email_password", EmailPassword, :sign_up
+    end
+
+    scope "/sign_in", SignIn do
+      post "/email_password", EmailPassword, :sign_in
+    end
   end
 end

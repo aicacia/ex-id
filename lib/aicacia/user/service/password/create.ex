@@ -17,6 +17,7 @@ defmodule Aicacia.User.Service.Password.Create do
     %Service.Password.Create{}
     |> cast(attrs, [:user_id, :password])
     |> validate_required([:user_id, :password])
+    |> validate_length(:password, min: 8)
     |> encrypt_password()
     |> validate_password_not_current()
     |> validate_password_not_already_used()
