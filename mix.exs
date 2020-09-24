@@ -54,7 +54,8 @@ defmodule Aicacia.User.MixProject do
       {:plug_cowboy, "~> 2.3"},
       {:peerage, "~> 1.0"},
       {:distillery, "~> 2.1"},
-      {:bcrypt_elixir, "~> 2.0"}
+      {:bcrypt_elixir, "~> 2.0"},
+      {:guardian, "~> 2.0"}
     ]
 
   defp namespace(), do: "api"

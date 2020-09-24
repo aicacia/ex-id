@@ -29,6 +29,10 @@ config :cors_plug,
 
 config :bcrypt_elixir, log_rounds: 12
 
+config :aicacia_user, Aicacia.User.Web.Guardian,
+  issuer: "aicacia_user",
+  secret_key: System.get_env("GUARDIAN_TOKEN")
+
 config :aicacia_user, Aicacia.User.Repo,
   username: "postgres",
   password: "postgres",

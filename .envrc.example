@@ -1,2 +1,4 @@
 export HELM_REPO_USERNAME="user"
 export HELM_REPO_PASSWORD="password"
+
+export GUARDIAN_TOKEN="Secret key. You can use `mix guardian.gen.secret` to get one"

@@ -2,7 +2,6 @@ defmodule Aicacia.User.Service.SignUp.EmailPassword do
   use Aicacia.Handler
   import Ecto.Changeset
 
-  alias Aicacia.User.Model
   alias Aicacia.User.Service
   alias Aicacia.User.Repo
 

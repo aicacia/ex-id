@@ -9,7 +9,7 @@ defmodule Aicacia.User.Web do
     end
   end
 
-  def plugs do
+  def plug do
     quote do
       use Phoenix.Controller, namespace: Aicacia.User.Web
       import Plug.Conn
