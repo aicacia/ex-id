@@ -1,4 +1,4 @@
-defmodule Aicacia.User.Service.User.Delete do
+defmodule Aicacia.User.Service.User.Deactivate do
   use Aicacia.Handler
 
   alias Aicacia.User.Model
@@ -10,16 +10,19 @@ defmodule Aicacia.User.Service.User.Delete do
   end
 
   def changeset(%{} = params) do
-    %Service.User.Delete{}
+    %Service.User.Deactivate{}
     |> cast(params, [:id])
     |> validate_required([:id])
   end
 
   def handle(%{} = command) do
     Repo.run(fn ->
-      user = Repo.get!(Model.User, command.id)
-      Repo.delete!(user)
-      user
+      %Model.User{}
+      |> cast(%{id: command.id, active: false}, [:id, :active])
+      |> validate_required([:id, :active])
+      |> Repo.update!()
+
+      Service.User.Show.handle!(%{id: command.id})
     end)
   end
 end

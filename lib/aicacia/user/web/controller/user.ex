@@ -8,7 +8,7 @@ defmodule Aicacia.User.Web.Controller.User do
 
   action_fallback Aicacia.User.Web.Controller.Fallback
 
-  def current_user(conn, _params) do
+  def current(conn, _params) do
     user = conn.assigns[:user]
     user_token = conn.assigns[:user_token]
 
@@ -17,10 +17,15 @@ defmodule Aicacia.User.Web.Controller.User do
     |> render("private_show.json", user: user, user_token: user_token)
   end
 
-  def confirm_email(conn, params) do
-    with {:ok, command} <- Service.Email.Confirm.new(params),
-         {:ok, user} <- Service.Email.Confirm.handle(command) do
-      sign_in_user(conn, {:ok, user})
+  def deactivate(conn, _params) do
+    user = conn.assigns[:user]
+
+    with {:ok, command} <- Service.User.Deactivate.new(%{user_id: user.id}),
+         {:ok, user} <- Service.User.Deactivate.handle(command) do
+      conn
+      |> put_status(200)
+      |> put_view(View.User)
+      |> render("private_show.json", user: user)
     end
   end
 
@@ -31,7 +36,9 @@ defmodule Aicacia.User.Web.Controller.User do
       |> List.first()
 
     with {:ok, _claims} <- Guardian.revoke(user_token) do
-      send_resp(conn, :no_content, "")
+      conn
+      |> put_status(204)
+      |> json(%{})
     end
   end
 

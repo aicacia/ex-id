@@ -16,7 +16,14 @@ defmodule Aicacia.User.MixProject do
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: [
+        coveralls: :test,
+        "coveralls.detail": :test,
+        "coveralls.post": :test,
+        "coveralls.html": :test
+      ]
     ]
 
   def application,
@@ -55,7 +62,8 @@ defmodule Aicacia.User.MixProject do
       {:peerage, "~> 1.0"},
       {:distillery, "~> 2.1"},
       {:bcrypt_elixir, "~> 2.0"},
-      {:guardian, "~> 2.0"}
+      {:guardian, "~> 2.0"},
+      {:excoveralls, "~> 0.10", only: :test}
     ]
 
   defp namespace(), do: "api"

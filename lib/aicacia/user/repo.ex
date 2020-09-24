@@ -10,14 +10,4 @@ defmodule Aicacia.User.Repo do
       e -> {:error, e}
     end
   end
-
-  def run!(fun_or_multi, opts \\ []) do
-    case Aicacia.User.Repo.run(fun_or_multi, opts) do
-      {:error, error} ->
-        raise error
-
-      result ->
-        result
-    end
-  end
 end

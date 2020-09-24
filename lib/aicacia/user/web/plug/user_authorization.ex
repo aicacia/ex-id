@@ -2,8 +2,8 @@ defmodule Aicacia.User.Web.Plug.UserAuthentication do
   use Aicacia.User.Web, :plug
 
   alias Aicacia.User.Web.Guardian
-  alias Aicacia.User.Model
-  alias Aicacia.User.Repo
+  alias Aicacia.User.Service
+  alias Aicacia.User.Web.View
 
   def authorization_header(), do: "authorization"
 
@@ -21,25 +21,26 @@ defmodule Aicacia.User.Web.Plug.UserAuthentication do
   defp authorize_connection(conn, user_token) do
     case Guardian.decode_and_verify(user_token) do
       {:ok, %{"sub" => user_id}} ->
-        assign_auth_data(conn, user_token, Repo.get(Model.User, user_id))
+        assign_auth_data(conn, user_token, Service.User.Show.handle(%{id: user_id}))
 
       _otherwise ->
         unauthorized(conn)
     end
   end
 
-  defp assign_auth_data(conn, _token, nil), do: unauthorized(conn)
-
-  defp assign_auth_data(conn, user_token, user) do
+  defp assign_auth_data(conn, user_token, {:ok, user}) do
     conn
     |> assign(:user_token, user_token)
     |> assign(:user, user)
   end
 
+  defp assign_auth_data(conn, _token, _result), do: unauthorized(conn)
+
   def unauthorized(conn) do
     conn
-    |> put_status(401)
-    |> render(Aicacia.Auth.Web.View.Error, "401.json")
+    |> put_status(:unauthorized)
+    |> put_view(View.Error)
+    |> render(:"401")
     |> halt()
   end
 end

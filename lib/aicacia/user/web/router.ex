@@ -24,10 +24,24 @@ defmodule Aicacia.User.Web.Router do
     end
 
     scope "/user" do
-      get "/current", User, :current_user
-      put "/confirm_email", User, :confirm_email
-      patch "/confirm_email", User, :confirm_email
-      delete "/sign_out", User, :sign_out
+      pipe_through :user_authenticated
+
+      get "/current", User, :current
+      delete "/current", User, :sign_out
+
+      scope "/email", User do
+        post("/", Email, :create)
+        put("/confirm", Email, :confirm)
+        patch("/confirm", Email, :confirm)
+        put("/:id/primary", Email, :set_primary)
+        patch("/:id/primary", Email, :set_primary)
+        delete("/:id", Email, :delete)
+      end
+
+      scope "/password", User do
+        put("/reset", Password, :reset)
+        patch("/reset", Password, :reset)
+      end
     end
   end
 end

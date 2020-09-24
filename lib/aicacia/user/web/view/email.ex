@@ -10,6 +10,7 @@ defmodule Aicacia.User.Web.View.Email do
   def render("email.json", %{email: email}),
     do: %{
       id: email.id,
+      user_id: email.user_id,
       email: email.email,
       confirmed: email.confirmed,
       primary: email.primary,

@@ -47,18 +47,4 @@ defmodule Aicacia.User.Service.PasswordTest do
       end)
     end
   end
-
-  describe "update" do
-    test "should update password" do
-      user = Service.User.Create.handle!(%{})
-
-      %{user_id: user.id, password: "password"}
-      |> Service.Password.Create.new!()
-      |> Service.Password.Create.handle!()
-
-      %{user_id: user.id, password: "changed_password", old_password: "password"}
-      |> Service.Password.Update.new!()
-      |> Service.Password.Update.handle!()
-    end
-  end
 end

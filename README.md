@@ -2,6 +2,7 @@
 
 To start your Phoenix server:
 
+- Setup envrc `cp .envrc.example .envrc` Install [direnv](https://direnv.net/)
 - Install dependencies with `mix deps.get`
 - Start Phoenix endpoint with `mix phx.server`
 
