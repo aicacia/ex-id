@@ -1,4 +1,4 @@
-defmodule Aicacia.User.Repo.Migrations.CreateEmailConfirmationTokens do
+defmodule Aicacia.Id.Repo.Migrations.CreateEmailConfirmationTokens do
   use Ecto.Migration
 
   def change do

@@ -1,20 +1,20 @@
-defmodule Aicacia.User.Web.Case do
+defmodule Aicacia.Id.Web.Case do
   use ExUnit.CaseTemplate
 
   using do
     quote do
       use Phoenix.ConnTest
-      alias Aicacia.User.Web.Router.Helpers, as: Routes
+      alias Aicacia.Id.Web.Router.Helpers, as: Routes
 
-      @endpoint Aicacia.User.Web.Endpoint
+      @endpoint Aicacia.Id.Web.Endpoint
     end
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Aicacia.User.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Aicacia.Id.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Aicacia.User.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(Aicacia.Id.Repo, {:shared, self()})
     end
 
     {:ok, conn: Phoenix.ConnTest.build_conn()}

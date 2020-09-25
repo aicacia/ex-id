@@ -3,7 +3,7 @@ replicas:
   max: 1
 
 image:
-  repository: registry.local-k8s.com/api/aicacia_user
+  repository: registry.local-k8s.com/api/aicacia_id
   tag: 0.1.0
   pullPolicy: Always
 

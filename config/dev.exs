@@ -1,6 +1,6 @@
 use Mix.Config
 
-config :aicacia_user, Aicacia.User.Web.Endpoint,
+config :aicacia_id, Aicacia.Id.Web.Endpoint,
   http: [port: 4000],
   debug_errors: true,
   code_reloader: true,

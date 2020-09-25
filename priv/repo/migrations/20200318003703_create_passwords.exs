@@ -1,4 +1,4 @@
-defmodule Aicacia.User.Repo.Migrations.CreatePasswords do
+defmodule Aicacia.Id.Repo.Migrations.CreatePasswords do
   use Ecto.Migration
 
   def change do

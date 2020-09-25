@@ -45,8 +45,8 @@ end
 # when running `mix release`, the first release in the file
 # will be used by default
 
-release :aicacia_user do
-  set(version: current_version(:aicacia_user))
+release :aicacia_id do
+  set(version: current_version(:aicacia_id))
 
   set(
     applications: [

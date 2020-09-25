@@ -1,9 +1,9 @@
-defmodule Aicacia.User.MixProject do
+defmodule Aicacia.Id.MixProject do
   use Mix.Project
 
   def organization, do: :aicacia
 
-  def name, do: :user
+  def name, do: :id
 
   def version, do: "0.1.0"
 
@@ -28,7 +28,7 @@ defmodule Aicacia.User.MixProject do
 
   def application,
     do: [
-      mod: {Aicacia.User.Application, []},
+      mod: {Aicacia.Id.Application, []},
       extra_applications: [:logger, :runtime_tools]
     ]
 

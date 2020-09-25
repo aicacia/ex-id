@@ -1,4 +1,4 @@
-defmodule Aicacia.User.Repo.Migrations.CreateUsers do
+defmodule Aicacia.Id.Repo.Migrations.CreateUsers do
   use Ecto.Migration
 
   def change do

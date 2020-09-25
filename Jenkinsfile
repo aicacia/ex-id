@@ -1,7 +1,7 @@
 pipeline {
   agent {
     kubernetes {
-      label "aicacia_user-api-build-agent"
+      label "aicacia_id-api-build-agent"
       defaultContainer "jnlp"
       yamlFile "jenkinsAgent.yaml"
     }
