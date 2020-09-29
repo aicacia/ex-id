@@ -14,6 +14,7 @@ defmodule Aicacia.Id.Service.Username.Update do
     %Service.Username.Update{}
     |> cast(attrs, [:user_id, :username])
     |> validate_required([:user_id, :username])
+    |> validate_format(:username, Service.Username.Create.username_regex())
   end
 
   def handle(%{} = command) do
