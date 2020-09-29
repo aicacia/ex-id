@@ -26,25 +26,25 @@ defmodule Aicacia.Id.Web.Controller.User.EmailTest do
           conn,
           Routes.email_path(@endpoint, :create),
           %{
-            email: "example@domain.com"
+            email: "email@domain.com"
           }
         )
 
       email = json_response(conn, 201)
 
-      assert email["email"] == "example@domain.com"
+      assert email["email"] == "email@domain.com"
       assert email["user_id"] == user.id
     end
 
     test "should fail to create a new email if already in use", %{conn: conn, user: user} do
-      Service.Email.Create.handle!(%{user_id: user.id, email: "example@domain.com"})
+      Service.Email.Create.handle!(%{user_id: user.id, email: "email@domain.com"})
 
       conn =
         post(
           conn,
           Routes.email_path(@endpoint, :create),
           %{
-            email: "example@domain.com"
+            email: "email@domain.com"
           }
         )
 
@@ -59,7 +59,7 @@ defmodule Aicacia.Id.Web.Controller.User.EmailTest do
       email =
         Service.Email.Create.handle!(%{
           user_id: user.id,
-          email: "example@domain.com",
+          email: "email@domain.com",
           primary: true
         })
 
@@ -114,7 +114,7 @@ defmodule Aicacia.Id.Web.Controller.User.EmailTest do
       email =
         Service.Email.Create.handle!(%{
           user_id: user.id,
-          email: "example@domain.com"
+          email: "email@domain.com"
         })
 
       conn =
@@ -130,7 +130,7 @@ defmodule Aicacia.Id.Web.Controller.User.EmailTest do
       email =
         Service.Email.Create.handle!(%{
           user_id: user.id,
-          email: "example@domain.com",
+          email: "email@domain.com",
           primary: true
         })
 

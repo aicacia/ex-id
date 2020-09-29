@@ -16,11 +16,11 @@ defmodule Aicacia.Id.Web.Router do
     head "/health", HealthCheck, :health
 
     scope "/sign_up", SignUp do
-      post "/email_password", EmailPassword, :sign_up
+      post "/username_and_password", UsernameAndPassword, :sign_up
     end
 
     scope "/sign_in", SignIn do
-      post "/email_password", EmailPassword, :sign_in
+      post "/username_or_email_and_password", UsernameOrEmailAndPassword, :sign_in
     end
 
     scope "/user" do

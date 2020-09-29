@@ -45,4 +45,10 @@ defmodule Aicacia.Id.Service.Email.Create do
   def confirmation_token(length) do
     :crypto.strong_rand_bytes(length) |> Base.url_encode64() |> binary_part(0, length)
   end
+
+  def email?(string) when is_binary(string) do
+    Regex.match?(@email_regex, string)
+  end
+
+  def email?(nil), do: false
 end

@@ -1,4 +1,4 @@
-defmodule Aicacia.Id.Service.SignUp.EmailPassword do
+defmodule Aicacia.Id.Service.SignUp.UsernameAndPassword do
   use Aicacia.Handler
   import Ecto.Changeset
 
@@ -6,24 +6,24 @@ defmodule Aicacia.Id.Service.SignUp.EmailPassword do
   alias Aicacia.Id.Repo
 
   schema "" do
-    field(:email, :string)
+    field(:username, :string)
     field(:password, :string)
   end
 
   def changeset(%{} = attrs) do
-    %Service.SignUp.EmailPassword{}
-    |> cast(attrs, [:email, :password])
-    |> validate_required([:email, :password])
+    %Service.SignUp.UsernameAndPassword{}
+    |> cast(attrs, [:username, :password])
+    |> validate_required([:username, :password])
   end
 
   def handle(%{} = command) do
     Repo.run(fn ->
       user = %{} |> Service.User.Create.new!() |> Service.User.Create.handle!()
 
-      _email =
-        %{user_id: user.id, email: command.email, primary: true}
-        |> Service.Email.Create.new!()
-        |> Service.Email.Create.handle!()
+      _username =
+        %{user_id: user.id, username: command.username, primary: true}
+        |> Service.Username.Create.new!()
+        |> Service.Username.Create.handle!()
 
       _password =
         %{user_id: user.id, password: command.password}

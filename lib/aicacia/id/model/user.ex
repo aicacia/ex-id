@@ -6,6 +6,8 @@ defmodule Aicacia.Id.Model.User do
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "users" do
+    has_one(:username, Model.Username)
+
     has_many(:emails, Model.Email)
 
     has_one(:password, Model.Password)

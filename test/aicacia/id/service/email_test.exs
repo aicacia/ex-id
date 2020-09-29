@@ -10,7 +10,7 @@ defmodule Aicacia.Id.Service.EmailTest do
       user = Service.User.Create.handle!(%{})
 
       email =
-        %{user_id: user.id, email: "example@domain.com"}
+        %{user_id: user.id, email: "email@domain.com"}
         |> Service.Email.Create.new!()
         |> Service.Email.Create.handle!()
 
@@ -22,12 +22,12 @@ defmodule Aicacia.Id.Service.EmailTest do
     test "should fail on non unique email" do
       user = Service.User.Create.handle!(%{})
 
-      %{user_id: user.id, email: "example@domain.com"}
+      %{user_id: user.id, email: "email@domain.com"}
       |> Service.Email.Create.new!()
       |> Service.Email.Create.handle!()
 
       assert_raise(Ecto.InvalidChangesetError, fn ->
-        %{user_id: user.id, email: "example@domain.com"}
+        %{user_id: user.id, email: "email@domain.com"}
         |> Service.Email.Create.new!()
         |> Service.Email.Create.handle!()
       end)
@@ -37,7 +37,7 @@ defmodule Aicacia.Id.Service.EmailTest do
   describe "confirm" do
     test "should confirm an email" do
       user = Service.User.Create.handle!(%{})
-      email = Service.Email.Create.handle!(%{user_id: user.id, email: "example@domain.com"})
+      email = Service.Email.Create.handle!(%{user_id: user.id, email: "email@domain.com"})
 
       email_confirmation_token =
         Repo.get_by!(Model.EmailConfirmationToken, email_id: email.id, user_id: user.id)

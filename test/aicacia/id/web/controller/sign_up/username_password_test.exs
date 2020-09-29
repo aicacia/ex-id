@@ -1,4 +1,4 @@
-defmodule Aicacia.Id.Web.Controller.SignUp.EmailPasswordTest do
+defmodule Aicacia.Id.Web.Controller.SignUp.UsernameAndPasswordTest do
   use Aicacia.Id.Web.Case
 
   setup %{conn: conn} do
@@ -8,14 +8,14 @@ defmodule Aicacia.Id.Web.Controller.SignUp.EmailPasswordTest do
        |> put_req_header("accept", "application/json")}
   end
 
-  describe "email_password" do
-    test "should sign up with email and password", %{conn: conn} do
+  describe "username_and_password" do
+    test "should sign up with username and password", %{conn: conn} do
       conn =
         post(
           conn,
-          Routes.email_password_path(@endpoint, :sign_up),
+          Routes.username_and_password_path(@endpoint, :sign_up),
           %{
-            email: "example@domain.com",
+            username: "username",
             password: "password"
           }
         )
