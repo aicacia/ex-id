@@ -63,6 +63,7 @@ defmodule Aicacia.Id.MixProject do
       {:distillery, "~> 2.1"},
       {:bcrypt_elixir, "~> 2.0"},
       {:guardian, "~> 2.0"},
+      {:open_api_spex, "~> 3.9"},
       {:excoveralls, "~> 0.10", only: :test}
     ]
 

@@ -19,6 +19,7 @@ defmodule Aicacia.Id.Web.View.User do
   def render("user.json", %{user: user}) do
     %{
       id: user.id,
+      username: user.username,
       inserted_at: user.inserted_at,
       updated_at: user.updated_at
     }
@@ -27,6 +28,7 @@ defmodule Aicacia.Id.Web.View.User do
   def render("private_user.json", %{user: user, user_token: user_token}) do
     %{
       id: user.id,
+      username: user.username,
       email: render_email(user.emails),
       emails:
         render_many(

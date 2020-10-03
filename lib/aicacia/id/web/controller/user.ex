@@ -1,13 +1,27 @@
 defmodule Aicacia.Id.Web.Controller.User do
+  @moduledoc tags: ["User"]
+
   use Aicacia.Id.Web, :controller
+  use OpenApiSpex.Controller
 
   alias Aicacia.Id.Web.Guardian
   alias Aicacia.Id.Model
   alias Aicacia.Id.Service
   alias Aicacia.Id.Web.View
+  alias Aicacia.Id.Web.Schema
+
+  plug OpenApiSpex.Plug.CastAndValidate, json_render_error_v2: true
 
   action_fallback Aicacia.Id.Web.Controller.Fallback
 
+  @doc """
+  Gets the Current User
+
+  Returns the current user based on the bearer token
+  """
+  @doc responses: [
+         ok: {"Current User Response", "application/json", Schema.User.Private}
+       ]
   def current(conn, _params) do
     user = conn.assigns[:user]
     user_token = conn.assigns[:user_token]
@@ -17,6 +31,14 @@ defmodule Aicacia.Id.Web.Controller.User do
     |> render("private_show.json", user: user, user_token: user_token)
   end
 
+  @doc """
+  Deactivates the Current User
+
+  Deactivates the current User's account
+  """
+  @doc responses: [
+         ok: {"PrivateUser", "application/json", Schema.User.Private}
+       ]
   def deactivate(conn, _params) do
     user = conn.assigns[:user]
 
@@ -29,6 +51,14 @@ defmodule Aicacia.Id.Web.Controller.User do
     end
   end
 
+  @doc """
+  Sign current User out
+
+  Signs out the current User based on the bearer token
+  """
+  @doc responses: [
+         no_content: "Empty response"
+       ]
   def sign_out(conn, _params) do
     user_token =
       conn
