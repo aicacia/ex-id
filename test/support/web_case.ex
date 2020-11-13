@@ -3,7 +3,8 @@ defmodule Aicacia.Id.Web.Case do
 
   using do
     quote do
-      use Phoenix.ConnTest
+      import Plug.Conn
+      import Phoenix.ConnTest
       alias Aicacia.Id.Web.Router.Helpers, as: Routes
 
       @endpoint Aicacia.Id.Web.Endpoint

@@ -8,8 +8,6 @@ defmodule Aicacia.Id.Web.Controller.SignUp.UsernameAndPassword do
 
   alias Aicacia.Id.Web.Schema
 
-  plug OpenApiSpex.Plug.CastAndValidate, json_render_error_v2: true
-
   action_fallback Aicacia.Id.Web.Controller.Fallback
 
   @doc """
@@ -17,7 +15,10 @@ defmodule Aicacia.Id.Web.Controller.SignUp.UsernameAndPassword do
 
   Signs up a user and returns the User with the Bearer Token
   """
-  @doc responses: [
+  @doc request_body:
+         {"Request body to sign up", "application/json", Schema.SignUp.UsernamePassword,
+          required: true},
+       responses: [
          ok: {"Sign up User Response", "application/json", Schema.User.Private}
        ]
   def sign_up(conn, params) do

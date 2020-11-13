@@ -10,8 +10,6 @@ defmodule Aicacia.Id.Web.Controller.User do
   alias Aicacia.Id.Web.View
   alias Aicacia.Id.Web.Schema
 
-  plug OpenApiSpex.Plug.CastAndValidate, json_render_error_v2: true
-
   action_fallback Aicacia.Id.Web.Controller.Fallback
 
   @doc """

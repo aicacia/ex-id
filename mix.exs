@@ -41,7 +41,7 @@ defmodule Aicacia.Id.MixProject do
       {:phoenix_pubsub, "~> 2.0"},
       {:phoenix_html, "~> 2.11"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
-      {:phoenix_live_dashboard, "~> 0.3 or ~> 0.2.9", only: :dev},
+      {:phoenix_live_dashboard, "~> 0.3 or ~> 0.2.9", like: [:dev, :test]},
       {:phoenix_live_view, "~> 0.14.6"},
       {:floki, "~> 0.27", only: :test},
       {:telemetry_metrics, "~> 0.4"},

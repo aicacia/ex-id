@@ -51,6 +51,25 @@ defmodule Aicacia.Id.Web.Schema.User do
     })
   end
 
+  defmodule PasswordReset do
+    require OpenApiSpex
+
+    OpenApiSpex.schema(%{
+      title: "User.EmailCreate",
+      description: "create user email",
+      type: :object,
+      properties: %{
+        old_password: %Schema{type: :string, description: "old password"},
+        password: %Schema{type: :string, description: "password"}
+      },
+      required: [:old_password, :password],
+      example: %{
+        "old_password" => "old_password",
+        "password" => "password"
+      }
+    })
+  end
+
   defmodule Private do
     require OpenApiSpex
 

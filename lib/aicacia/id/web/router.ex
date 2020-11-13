@@ -10,10 +10,6 @@ defmodule Aicacia.Id.Web.Router do
     plug :put_secure_browser_headers
   end
 
-  pipeline :swagger_browser do
-    plug :accepts, ["html"]
-  end
-
   pipeline :api do
     plug :accepts, ["json"]
   end
@@ -26,40 +22,34 @@ defmodule Aicacia.Id.Web.Router do
     plug OpenApiSpex.Plug.PutApiSpec, module: Aicacia.Id.Web.ApiSpec
   end
 
-  scope "/" do
-    pipe_through :swagger_browser
+  scope "/swagger" do
+    pipe_through :browser
 
-    get "/swagger", OpenApiSpex.Plug.SwaggerUI,
-      path: "/swagger.json",
+    get "/", OpenApiSpex.Plug.SwaggerUI,
+      path: "/api/swagger.json",
       default_model_expand_depth: 10,
       display_operation_id: true
-  end
-
-  scope "/" do
-    pipe_through :api
-    pipe_through :api_spec
-    get "/swagger.json", OpenApiSpex.Plug.RenderSpec, []
   end
 
   if Mix.env() in [:dev, :test] do
     import Phoenix.LiveDashboard.Router
 
-    scope "/" do
+    scope "/dashboard" do
       pipe_through :browser
 
-      live_dashboard "/dashboard",
+      live_dashboard "/",
         metrics: Aicacia.Id.Web.Telemetry,
         ecto_repos: [Aicacia.Id.Repo]
     end
   end
 
-  scope "/", Aicacia.Id.Web.Live do
-    pipe_through :browser
-
-    live "/", Page, :index
+  scope "/api" do
+    pipe_through :api
+    pipe_through :api_spec
+    get "/swagger.json", OpenApiSpex.Plug.RenderSpec, []
   end
 
-  scope "/", Aicacia.Id.Web.Controller do
+  scope "/api", Aicacia.Id.Web.Controller do
     pipe_through :api
     pipe_through :api_spec
 
@@ -94,5 +84,11 @@ defmodule Aicacia.Id.Web.Router do
         patch("/reset", Password, :reset)
       end
     end
+  end
+
+  scope "/", Aicacia.Id.Web.Live do
+    pipe_through :browser
+
+    live "/", Page, :index
   end
 end

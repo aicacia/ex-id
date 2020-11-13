@@ -8,8 +8,6 @@ defmodule Aicacia.Id.Web.Controller.User.Password do
   alias Aicacia.Id.Web.Controller
   alias Aicacia.Id.Web.Schema
 
-  plug OpenApiSpex.Plug.CastAndValidate, json_render_error_v2: true
-
   action_fallback Controller.Fallback
 
   @doc """
@@ -17,7 +15,9 @@ defmodule Aicacia.Id.Web.Controller.User.Password do
 
   Resets the User's Password creating a new Token in the process
   """
-  @doc responses: [
+  @doc request_body:
+         {"reset user password", "application/json", Schema.User.PasswordReset, required: true},
+       responses: [
          ok: {"Confirmed User Email Response", "application/json", Schema.User.Private}
        ]
   def reset(conn, params) do

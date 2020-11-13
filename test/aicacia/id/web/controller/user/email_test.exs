@@ -32,7 +32,7 @@ defmodule Aicacia.Id.Web.Controller.User.EmailTest do
 
       email = json_response(conn, 201)
 
-      assert email["email"] == "email@domain.com"
+      assert email["email"] == "example@domain.com"
       assert email["user_id"] == user.id
     end
 
