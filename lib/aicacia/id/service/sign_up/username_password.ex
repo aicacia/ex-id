@@ -8,12 +8,14 @@ defmodule Aicacia.Id.Service.SignUp.UsernameAndPassword do
   schema "" do
     field(:username, :string)
     field(:password, :string)
+    field(:password_confirmation, :string)
   end
 
   def changeset(%{} = attrs) do
     %Service.SignUp.UsernameAndPassword{}
-    |> cast(attrs, [:username, :password])
-    |> validate_required([:username, :password])
+    |> cast(attrs, [:username, :password, :password_confirmation])
+    |> validate_confirmation(:password)
+    |> validate_required([:username, :password, :password_confirmation])
   end
 
   def handle(%{} = command) do

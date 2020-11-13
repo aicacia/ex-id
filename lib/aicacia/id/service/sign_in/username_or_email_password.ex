@@ -29,7 +29,7 @@ defmodule Aicacia.Id.Service.SignIn.UsernameOrEmailAndPassword do
     Service.User.Show.handle(%{id: command.user_id})
   end
 
-  defp validate_username_or_email(changeset) do
+  def validate_username_or_email(changeset) do
     username_or_email = get_field(changeset, :username_or_email)
 
     if Service.Email.Create.email?(username_or_email) do
@@ -39,7 +39,7 @@ defmodule Aicacia.Id.Service.SignIn.UsernameOrEmailAndPassword do
     end
   end
 
-  defp validate_username_or_email_and_password(changeset) do
+  def validate_username_or_email_and_password(changeset) do
     case get_field(changeset, :email) do
       nil ->
         case get_field(changeset, :username) do
@@ -67,7 +67,7 @@ defmodule Aicacia.Id.Service.SignIn.UsernameOrEmailAndPassword do
     end
   end
 
-  defp validate_username_or_email_and_password(changeset, user_id) do
+  def validate_username_or_email_and_password(changeset, user_id) do
     case Service.Password.Verify.new(%{
            user_id: user_id,
            password: get_field(changeset, :password)
