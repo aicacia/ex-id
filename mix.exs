@@ -29,38 +29,32 @@ defmodule Aicacia.Id.MixProject do
   def application,
     do: [
       mod: {Aicacia.Id.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :os_mon]
     ]
 
   defp elixirc_paths(:test), do: ["lib", "test/support"]
   defp elixirc_paths(_), do: ["lib"]
 
-  defp env(:prod),
-    do: [
-      DOCKER_REGISTRY: "registry.#{organization()}.com",
-      HELM_REPO: "https://chartmuseum.#{organization()}.com"
-    ]
-
-  defp env(_),
-    do: [
-      DOCKER_REGISTRY: "registry.local-k8s.com",
-      HELM_REPO: "http://chartmuseum.local-k8s.com"
-    ]
-
   defp deps,
     do: [
-      {:phoenix, "~> 1.4"},
-      {:phoenix_pubsub, "~> 1.1"},
-      {:postgrex, ">= 0.0.0"},
+      {:phoenix, "~> 1.5"},
+      {:phoenix_pubsub, "~> 2.0"},
+      {:phoenix_html, "~> 2.11"},
+      {:phoenix_live_reload, "~> 1.2", only: :dev},
+      {:phoenix_live_dashboard, "~> 0.3 or ~> 0.2.9", only: :dev},
+      {:phoenix_live_view, "~> 0.14.6"},
+      {:floki, "~> 0.27", only: :test},
+      {:telemetry_metrics, "~> 0.4"},
+      {:telemetry_poller, "~> 0.4"},
       {:aicacia_handler, "~> 0.1"},
       {:ecto_sql, "~> 3.4"},
+      {:ecto_psql_extras, "~> 0.2", only: :dev},
+      {:postgrex, ">= 0.0.0"},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.2"},
-      {:uuid, "~> 1.1"},
       {:cors_plug, "~> 2.0"},
       {:plug_cowboy, "~> 2.3"},
       {:peerage, "~> 1.0"},
-      {:distillery, "~> 2.1"},
       {:bcrypt_elixir, "~> 2.0"},
       {:guardian, "~> 2.0"},
       {:open_api_spex, "~> 3.9"},
@@ -69,9 +63,8 @@ defmodule Aicacia.Id.MixProject do
 
   defp namespace(), do: "api"
   defp helm_dir(), do: "./helm/#{organization()}-#{name()}"
-  defp get_env(key), do: Keyword.get(env(Mix.env()), key, "")
 
-  defp docker_repository(), do: "#{get_env(:DOCKER_REGISTRY)}/api/#{name()}"
+  defp docker_repository(), do: "registry.gitlab.com/aicacia/ex-id"
   defp docker_tag(), do: "#{docker_repository()}:#{version()}"
 
   defp helm_overrides(),
@@ -108,7 +101,7 @@ defmodule Aicacia.Id.MixProject do
       ],
 
       # Database
-      "ecto.setup": ["ecto.create", "ecto.migrate"],
+      "ecto.setup": ["ecto.create", "ecto.migrate", "cmd npm install --prefix assets"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate", "test"],
 
@@ -120,11 +113,6 @@ defmodule Aicacia.Id.MixProject do
       ],
 
       # Helm
-      "helm.push": [
-        "cmd cd #{helm_dir()} && helm push . #{get_env(:HELM_REPO)} --username=\"#{
-          get_env(:HELM_REPO_USERNAME)
-        }\" --password=\"#{get_env(:HELM_REPO_PASSWORD)}\""
-      ],
       "helm.delete": ["cmd helm delete --namespace #{namespace()} #{name()}"],
       "helm.install": ["cmd #{createHelmInstall()}"],
       "helm.install.local": ["cmd #{createHelmInstall("#{helm_dir()}/values-local.yaml")}"],

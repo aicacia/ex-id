@@ -34,6 +34,23 @@ defmodule Aicacia.Id.Web.Schema.User do
     })
   end
 
+  defmodule EmailCreate do
+    require OpenApiSpex
+
+    OpenApiSpex.schema(%{
+      title: "User.EmailCreate",
+      description: "create user email",
+      type: :object,
+      properties: %{
+        email: %Schema{type: :string, description: "Email address", format: :email}
+      },
+      required: [:email],
+      example: %{
+        "email" => "example@domain.com"
+      }
+    })
+  end
+
   defmodule Private do
     require OpenApiSpex
 
@@ -42,9 +59,10 @@ defmodule Aicacia.Id.Web.Schema.User do
       description: "A private user",
       type: :object,
       properties: %{
-        id: %Schema{type: :integer, description: "Id"},
+        id: %Schema{type: :string, description: "Id"},
+        token: %Schema{type: :string, description: "User Token"},
         username: %Schema{type: :string, description: "User name"},
-        email: %Schema{anyOf: [Email]},
+        email: Email,
         emails: %Schema{type: :array, items: Email},
         inserted_at: %Schema{
           type: :string,
@@ -55,7 +73,8 @@ defmodule Aicacia.Id.Web.Schema.User do
       },
       required: [:id, :username, :emails, :inserted_at, :updated_at],
       example: %{
-        "id" => 123,
+        "id" => "123e4567-e89b-12d3-a456-426614174000",
+        "token" => "a9psd8fhaowntw4iojha3084tjhap4jtq34tojapsjgaaaat5j955357f",
         "username" => "example",
         "email" => %{
           "id" => 1234,

@@ -32,8 +32,8 @@ defmodule Aicacia.Id.Web.Controller.User.PasswordTest do
           conn,
           Routes.password_path(@endpoint, :reset),
           %{
-            old_password: "old_password",
-            password: "password"
+            "old_password" => "old_password",
+            "password" => "password"
           }
         )
 
@@ -54,8 +54,8 @@ defmodule Aicacia.Id.Web.Controller.User.PasswordTest do
           conn,
           Routes.password_path(@endpoint, :reset),
           %{
-            old_password: "invalid_old_password",
-            password: "password"
+            "old_password" => "invalid_old_password",
+            "password" => "password"
           }
         )
 

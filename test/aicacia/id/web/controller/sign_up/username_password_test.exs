@@ -15,8 +15,8 @@ defmodule Aicacia.Id.Web.Controller.SignUp.UsernameAndPasswordTest do
           conn,
           Routes.username_and_password_path(@endpoint, :sign_up),
           %{
-            username: "username",
-            password: "password"
+            "username" => "username",
+            "password" => "password"
           }
         )
 

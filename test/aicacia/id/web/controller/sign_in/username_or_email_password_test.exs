@@ -19,8 +19,8 @@ defmodule Aicacia.Id.Web.Controller.SignIn.UsernameOrEmailPasswordTest do
           conn,
           Routes.username_or_email_and_password_path(@endpoint, :sign_in),
           %{
-            username_or_email: "email@domain.com",
-            password: "password"
+            "username_or_email" => "email@domain.com",
+            "password" => "password"
           }
         )
 
@@ -37,8 +37,8 @@ defmodule Aicacia.Id.Web.Controller.SignIn.UsernameOrEmailPasswordTest do
           conn,
           Routes.username_or_email_and_password_path(@endpoint, :sign_in),
           %{
-            username_or_email: "username",
-            password: "password"
+            "username_or_email" => "username",
+            "password" => "password"
           }
         )
 
@@ -55,8 +55,8 @@ defmodule Aicacia.Id.Web.Controller.SignIn.UsernameOrEmailPasswordTest do
           conn,
           Routes.username_or_email_and_password_path(@endpoint, :sign_in),
           %{
-            username_or_email: "wrong@domain.com",
-            password: "password"
+            "username_or_email" => "wrong@domain.com",
+            "password" => "password"
           }
         )
 
@@ -79,8 +79,8 @@ defmodule Aicacia.Id.Web.Controller.SignIn.UsernameOrEmailPasswordTest do
           conn,
           Routes.username_or_email_and_password_path(@endpoint, :sign_in),
           %{
-            username_or_email: "email@domain.com",
-            password: "wrong"
+            "username_or_email" => "email@domain.com",
+            "password" => "wrong"
           }
         )
 

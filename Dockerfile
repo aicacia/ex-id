@@ -1,4 +1,4 @@
-FROM elixir:1.8
+FROM elixir:1.10
 
 ARG MIX_ENV=prod
 
@@ -16,7 +16,5 @@ RUN mix deps.get
 RUN mix deps.compile
 
 COPY . /app
-
-# RUN mix distillery.release --verbose
 
 ENTRYPOINT /app/entrypoint.sh

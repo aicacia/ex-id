@@ -5,6 +5,8 @@ defmodule Aicacia.Id.Application do
   def start(_type, _args) do
     children = [
       Aicacia.Id.Repo,
+      Aicacia.Id.Web.Telemetry,
+      {Phoenix.PubSub, name: Aicacia.Id.PubSub},
       Aicacia.Id.Web.Endpoint
     ]
 

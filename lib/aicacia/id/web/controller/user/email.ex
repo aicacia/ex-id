@@ -1,12 +1,26 @@
 defmodule Aicacia.Id.Web.Controller.User.Email do
+  @moduledoc tags: ["User"]
+
   use Aicacia.Id.Web, :controller
+  use OpenApiSpex.Controller
 
   alias Aicacia.Id.Service
   alias Aicacia.Id.Web.Controller
   alias Aicacia.Id.Web.View
+  alias Aicacia.Id.Web.Schema
+
+  plug OpenApiSpex.Plug.CastAndValidate, json_render_error_v2: true
 
   action_fallback Controller.Fallback
 
+  @doc """
+  Confirm an Eamil
+
+  Confirms an Email and returns the User with the Bearer Token
+  """
+  @doc responses: [
+         ok: {"Confirmed User Email Response", "application/json", Schema.User.Private}
+       ]
   def confirm(conn, params) do
     with {:ok, command} <- Service.Email.Confirm.new(params),
          {:ok, email} <- Service.Email.Confirm.handle(command) do
@@ -14,6 +28,16 @@ defmodule Aicacia.Id.Web.Controller.User.Email do
     end
   end
 
+  @doc """
+  Create an Eamil
+
+  Create and returns an Email
+  """
+  @doc request_body:
+         {"Create Email Body", "application/json", Schema.User.EmailCreate, required: true},
+       responses: [
+         ok: {"Create an Email Response", "application/json", Schema.User.Email}
+       ]
   def create(conn, params) do
     user = conn.assigns[:user]
 
@@ -27,6 +51,14 @@ defmodule Aicacia.Id.Web.Controller.User.Email do
     end
   end
 
+  @doc """
+  Set Email as Primary
+
+  Sets an Email as User's Primary Email
+  """
+  @doc responses: [
+         ok: {"Set Primary Email Response", "application/json", Schema.User.Email}
+       ]
   def set_primary(conn, params) do
     user = conn.assigns[:user]
 
@@ -40,6 +72,14 @@ defmodule Aicacia.Id.Web.Controller.User.Email do
     end
   end
 
+  @doc """
+  Delete an Email
+
+  Delete a non-primary Email
+  """
+  @doc responses: [
+         ok: {"Delete non-primary Email Response", "application/json", Schema.User.Email}
+       ]
   def delete(conn, params) do
     user = conn.assigns[:user]
 

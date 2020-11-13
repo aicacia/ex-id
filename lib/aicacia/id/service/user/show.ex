@@ -20,7 +20,7 @@ defmodule Aicacia.Id.Service.User.Show do
     Repo.run(fn ->
       from(u in Model.User,
         where: u.id == ^command.id,
-        preload: [:emails, :password]
+        preload: [:username, :emails, :password]
       )
       |> Repo.one!()
     end)

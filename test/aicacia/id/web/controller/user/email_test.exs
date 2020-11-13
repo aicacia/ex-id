@@ -21,13 +21,13 @@ defmodule Aicacia.Id.Web.Controller.User.EmailTest do
 
   describe "create" do
     test "should create a new email", %{conn: conn, user: user} do
+      request_body = OpenApiSpex.Schema.example(Aicacia.Id.Web.Schema.User.EmailCreate.schema())
+
       conn =
         post(
           conn,
           Routes.email_path(@endpoint, :create),
-          %{
-            email: "email@domain.com"
-          }
+          request_body
         )
 
       email = json_response(conn, 201)
@@ -44,7 +44,7 @@ defmodule Aicacia.Id.Web.Controller.User.EmailTest do
           conn,
           Routes.email_path(@endpoint, :create),
           %{
-            email: "email@domain.com"
+            "email" => "email@domain.com"
           }
         )
 
@@ -71,7 +71,7 @@ defmodule Aicacia.Id.Web.Controller.User.EmailTest do
           conn,
           Routes.email_path(@endpoint, :confirm),
           %{
-            confirmation_token: confirmation_token.confirmation_token
+            "confirmation_token" => confirmation_token.confirmation_token
           }
         )
 
