@@ -12,6 +12,7 @@ defmodule Aicacia.Id.Repo.Migrations.CreateOldPasswords do
       timestamps(type: :utc_datetime)
     end
 
+    create(index(:old_passwords, [:user_id]))
     create(unique_index(:old_passwords, [:user_id, :encrypted_password]))
   end
 end

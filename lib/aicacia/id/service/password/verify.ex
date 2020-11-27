@@ -9,7 +9,7 @@ defmodule Aicacia.Id.Service.Password.Verify do
   def invalid_user_id_error, do: "user_id does not exists"
 
   schema "" do
-    field(:user_id, :binary_id)
+    belongs_to(:user, Model.User, type: :binary_id)
     field(:password, :string)
     field(:valid, :boolean, default: false)
   end
@@ -18,6 +18,8 @@ defmodule Aicacia.Id.Service.Password.Verify do
     %Service.Password.Verify{}
     |> cast(attrs, [:user_id, :password])
     |> validate_required([:user_id, :password])
+    |> validate_length(:password, min: 8)
+    |> foreign_key_constraint(:user_id)
     |> validate_password()
   end
 

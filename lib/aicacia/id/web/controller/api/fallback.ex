@@ -1,4 +1,4 @@
-defmodule Aicacia.Id.Web.Controller.Fallback do
+defmodule Aicacia.Id.Web.Controller.Api.Fallback do
   use Aicacia.Id.Web, :controller
 
   alias Aicacia.Id.Web.View

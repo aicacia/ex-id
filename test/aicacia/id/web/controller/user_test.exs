@@ -6,24 +6,24 @@ defmodule Aicacia.Id.Web.Controller.UserTest do
 
   setup %{conn: conn} do
     user = Service.User.Create.handle!(%{})
-    conn = Guardian.Plug.sign_in(conn, user)
-    user_token = Guardian.Plug.current_token(conn)
 
     {:ok,
      user: user,
-     user_token: user_token,
      conn:
        conn
        |> put_req_header("accept", "application/json")}
   end
 
   describe "current" do
-    test "should return current user", %{conn: conn, user: user, user_token: user_token} do
+    test "should return current user", %{conn: conn, user: user} do
+      conn = Guardian.Plug.sign_in(conn, user)
+      user_token = Guardian.Plug.current_token(conn)
+
       conn =
         get(
           conn
           |> put_req_header("authorization", user_token),
-          Routes.user_path(@endpoint, :current)
+          Routes.api_user_path(@endpoint, :current)
         )
 
       user_json = json_response(conn, 200)
@@ -34,9 +34,8 @@ defmodule Aicacia.Id.Web.Controller.UserTest do
     test "should return 401 with invalid token", %{conn: conn} do
       conn =
         get(
-          conn
-          |> put_req_header("authorization", "invalid token"),
-          Routes.user_path(@endpoint, :current)
+          conn,
+          Routes.api_user_path(@endpoint, :current)
         )
 
       json_response(conn, 401)
@@ -44,12 +43,15 @@ defmodule Aicacia.Id.Web.Controller.UserTest do
   end
 
   describe "sign_out" do
-    test "should sign out current user", %{conn: conn, user_token: user_token} do
+    test "should sign out current user", %{conn: conn, user: user} do
+      conn = Guardian.Plug.sign_in(conn, user)
+      user_token = Guardian.Plug.current_token(conn)
+
       conn =
         delete(
           conn
           |> put_req_header("authorization", user_token),
-          Routes.user_path(@endpoint, :sign_out)
+          Routes.api_user_path(@endpoint, :sign_out)
         )
 
       json_response(conn, 204)

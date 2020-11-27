@@ -1,4 +1,4 @@
-defmodule Aicacia.Id.Web.Controller.SignIn.UsernameOrEmailAndPassword do
+defmodule Aicacia.Id.Web.Controller.Api.SignIn.UsernameOrEmailAndPassword do
   @moduledoc tags: ["User"]
 
   use Aicacia.Id.Web, :controller
@@ -7,7 +7,7 @@ defmodule Aicacia.Id.Web.Controller.SignIn.UsernameOrEmailAndPassword do
   alias Aicacia.Id.Service
   alias Aicacia.Id.Web.Schema
 
-  action_fallback Aicacia.Id.Web.Controller.Fallback
+  action_fallback Aicacia.Id.Web.Controller.Api.Fallback
 
   @doc """
   Sign in
@@ -23,7 +23,7 @@ defmodule Aicacia.Id.Web.Controller.SignIn.UsernameOrEmailAndPassword do
   def sign_in(conn, params) do
     with {:ok, command} <- Service.SignIn.UsernameOrEmailAndPassword.new(params),
          {:ok, user} <- Service.SignIn.UsernameOrEmailAndPassword.handle(command) do
-      Aicacia.Id.Web.Controller.User.sign_in_user(conn, {:ok, user})
+      Aicacia.Id.Web.Controller.Api.User.sign_in_user(conn, {:ok, user})
     end
   end
 end

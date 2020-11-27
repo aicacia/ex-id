@@ -1,4 +1,4 @@
-defmodule Aicacia.Id.Web.Controller.HealthCheck do
+defmodule Aicacia.Id.Web.Controller.Api.HealthCheck do
   @moduledoc tags: ["Util"]
 
   use Aicacia.Id.Web, :controller
@@ -6,7 +6,7 @@ defmodule Aicacia.Id.Web.Controller.HealthCheck do
 
   alias Aicacia.Id.Web.Schema
 
-  action_fallback Aicacia.Id.Web.Controller.Fallback
+  action_fallback Aicacia.Id.Web.Controller.Api.Fallback
 
   @doc """
   Health Check

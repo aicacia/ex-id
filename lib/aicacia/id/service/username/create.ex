@@ -6,7 +6,7 @@ defmodule Aicacia.Id.Service.Username.Create do
   alias Aicacia.Id.Repo
 
   schema "" do
-    field(:user_id, :binary_id)
+    belongs_to(:user, Model.User, type: :binary_id)
     field(:username, :string)
   end
 
@@ -19,6 +19,8 @@ defmodule Aicacia.Id.Service.Username.Create do
     |> cast(attrs, [:user_id, :username])
     |> validate_required([:user_id, :username])
     |> validate_format(:username, @username_regex)
+    |> unique_constraint(:username)
+    |> foreign_key_constraint(:user_id)
   end
 
   def handle(%{} = command) do

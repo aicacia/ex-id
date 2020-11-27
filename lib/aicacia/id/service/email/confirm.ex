@@ -5,6 +5,8 @@ defmodule Aicacia.Id.Service.Email.Confirm do
   alias Aicacia.Id.Service
   alias Aicacia.Id.Repo
 
+  def invalid_confirmation_token, do: "invalid confirmation token"
+
   schema "" do
     field(:confirmation_token, :string)
   end
@@ -13,6 +15,7 @@ defmodule Aicacia.Id.Service.Email.Confirm do
     %Service.Email.Confirm{}
     |> cast(attrs, [:confirmation_token])
     |> validate_required([:confirmation_token])
+    |> validate_confirmation_token()
   end
 
   def handle(%{} = command) do
@@ -36,5 +39,21 @@ defmodule Aicacia.Id.Service.Email.Confirm do
 
       email
     end)
+  end
+
+  def validate_confirmation_token(changeset) do
+    case get_field(changeset, :confirmation_token) do
+      nil ->
+        add_error(changeset, :confirmation_token, invalid_confirmation_token())
+
+      confirmation_token ->
+        case Repo.get_by(Model.EmailConfirmationToken, confirmation_token: confirmation_token) do
+          nil ->
+            add_error(changeset, :confirmation_token, invalid_confirmation_token())
+
+          _email_confirmation_token ->
+            changeset
+        end
+    end
   end
 end

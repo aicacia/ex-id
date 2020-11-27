@@ -7,14 +7,16 @@ defmodule Aicacia.Id.Service.Email.SetPrimary do
   alias Aicacia.Id.Repo
 
   schema "" do
-    field(:user_id, :binary_id)
-    field(:email_id, :id)
+    belongs_to(:user, Model.User, type: :binary_id)
+    belongs_to(:email, Model.Email)
   end
 
   def changeset(%{} = attrs) do
     %Service.Email.SetPrimary{}
     |> cast(attrs, [:user_id, :email_id])
     |> validate_required([:user_id, :email_id])
+    |> foreign_key_constraint(:user_id)
+    |> foreign_key_constraint(:email_id)
   end
 
   def handle(%{} = command) do

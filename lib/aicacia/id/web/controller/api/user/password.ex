@@ -1,14 +1,14 @@
-defmodule Aicacia.Id.Web.Controller.User.Password do
+defmodule Aicacia.Id.Web.Controller.Api.User.Password do
   @moduledoc tags: ["User"]
 
   use Aicacia.Id.Web, :controller
   use OpenApiSpex.Controller
 
   alias Aicacia.Id.Service
-  alias Aicacia.Id.Web.Controller
   alias Aicacia.Id.Web.Schema
+  alias Aicacia.Id.Web.Controller
 
-  action_fallback Controller.Fallback
+  action_fallback Controller.Api.Fallback
 
   @doc """
   Reset Password
@@ -30,7 +30,7 @@ defmodule Aicacia.Id.Web.Controller.User.Password do
              password: Map.get(params, "password")
            }),
          {:ok, _password} <- Service.Password.Reset.handle(command) do
-      Aicacia.Id.Web.Controller.User.sign_in_user(conn, {:ok, user}, 201)
+      Controller.Api.User.sign_in_user(conn, {:ok, user}, 201)
     end
   end
 end

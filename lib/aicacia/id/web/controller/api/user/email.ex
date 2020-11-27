@@ -1,4 +1,4 @@
-defmodule Aicacia.Id.Web.Controller.User.Email do
+defmodule Aicacia.Id.Web.Controller.Api.User.Email do
   @moduledoc tags: ["User"]
 
   use Aicacia.Id.Web, :controller
@@ -9,7 +9,7 @@ defmodule Aicacia.Id.Web.Controller.User.Email do
   alias Aicacia.Id.Web.View
   alias Aicacia.Id.Web.Schema
 
-  action_fallback Controller.Fallback
+  action_fallback Controller.Api.Fallback
 
   @doc """
   Confirm an Eamil
@@ -22,7 +22,7 @@ defmodule Aicacia.Id.Web.Controller.User.Email do
   def confirm(conn, params) do
     with {:ok, command} <- Service.Email.Confirm.new(params),
          {:ok, email} <- Service.Email.Confirm.handle(command) do
-      Controller.User.sign_in_user(conn, Service.User.Show.handle(%{id: email.user_id}))
+      Controller.Api.User.sign_in_user(conn, Service.User.Show.handle(%{id: email.user_id}))
     end
   end
 

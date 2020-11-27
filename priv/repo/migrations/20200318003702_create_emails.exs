@@ -14,6 +14,7 @@ defmodule Aicacia.Id.Repo.Migrations.CreateEmails do
       timestamps(type: :utc_datetime)
     end
 
+    create(index(:emails, [:user_id]))
     create(unique_index(:emails, [:email]))
   end
 end

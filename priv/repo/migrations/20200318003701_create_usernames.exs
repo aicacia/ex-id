@@ -12,6 +12,7 @@ defmodule Aicacia.Id.Repo.Migrations.CreateUsernames do
       timestamps(type: :utc_datetime)
     end
 
+    create(index(:usernames, [:user_id]))
     create(unique_index(:usernames, [:username]))
   end
 end

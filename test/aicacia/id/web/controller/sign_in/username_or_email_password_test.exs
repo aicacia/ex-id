@@ -1,4 +1,4 @@
-defmodule Aicacia.Id.Web.Controller.SignIn.UsernameOrEmailPasswordTest do
+defmodule Aicacia.Id.Web.Controller.Api.SignIn.UsernameOrEmailPasswordTest do
   use Aicacia.Id.Web.Case
 
   alias Aicacia.Id.Service
@@ -17,7 +17,7 @@ defmodule Aicacia.Id.Web.Controller.SignIn.UsernameOrEmailPasswordTest do
       conn =
         post(
           conn,
-          Routes.username_or_email_and_password_path(@endpoint, :sign_in),
+          Routes.api_username_or_email_and_password_path(@endpoint, :sign_in),
           %{
             "username_or_email" => "email@domain.com",
             "password" => "password"
@@ -35,7 +35,7 @@ defmodule Aicacia.Id.Web.Controller.SignIn.UsernameOrEmailPasswordTest do
       conn =
         post(
           conn,
-          Routes.username_or_email_and_password_path(@endpoint, :sign_in),
+          Routes.api_username_or_email_and_password_path(@endpoint, :sign_in),
           %{
             "username_or_email" => "username",
             "password" => "password"
@@ -53,7 +53,7 @@ defmodule Aicacia.Id.Web.Controller.SignIn.UsernameOrEmailPasswordTest do
       conn =
         post(
           conn,
-          Routes.username_or_email_and_password_path(@endpoint, :sign_in),
+          Routes.api_username_or_email_and_password_path(@endpoint, :sign_in),
           %{
             "username_or_email" => "wrong@domain.com",
             "password" => "password"
@@ -77,7 +77,7 @@ defmodule Aicacia.Id.Web.Controller.SignIn.UsernameOrEmailPasswordTest do
       conn =
         post(
           conn,
-          Routes.username_or_email_and_password_path(@endpoint, :sign_in),
+          Routes.api_username_or_email_and_password_path(@endpoint, :sign_in),
           %{
             "username_or_email" => "email@domain.com",
             "password" => "wrong"

@@ -8,7 +8,7 @@ defmodule Aicacia.Id.Service.Email.Create do
   @email_regex ~r/^[\w.!#$%&’*+\-\/=?\^`{|}~]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*$/i
 
   schema "" do
-    field(:user_id, :binary_id)
+    belongs_to(:user, Model.User, type: :binary_id)
     field(:email, :string)
     field(:primary, :boolean)
   end
@@ -17,6 +17,7 @@ defmodule Aicacia.Id.Service.Email.Create do
     %Service.Email.Create{}
     |> cast(attrs, [:user_id, :email, :primary])
     |> validate_required([:user_id, :email])
+    |> foreign_key_constraint(:user_id)
     |> validate_format(:email, @email_regex)
   end
 

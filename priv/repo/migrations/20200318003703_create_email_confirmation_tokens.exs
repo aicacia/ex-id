@@ -14,6 +14,8 @@ defmodule Aicacia.Id.Repo.Migrations.CreateEmailConfirmationTokens do
       timestamps(type: :utc_datetime)
     end
 
+    create(index(:email_confirmation_tokens, [:user_id]))
+    create(index(:email_confirmation_tokens, [:email_id]))
     create(unique_index(:email_confirmation_tokens, [:user_id, :email_id]))
   end
 end

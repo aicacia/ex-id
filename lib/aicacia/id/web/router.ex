@@ -43,45 +43,43 @@ defmodule Aicacia.Id.Web.Router do
     end
   end
 
-  scope "/api" do
+  scope "/api", as: :api do
     pipe_through :api
     pipe_through :api_spec
+
     get "/swagger.json", OpenApiSpex.Plug.RenderSpec, []
-  end
 
-  scope "/api", Aicacia.Id.Web.Controller do
-    pipe_through :api
-    pipe_through :api_spec
+    scope "/", Aicacia.Id.Web.Controller.Api do
+      get "/health", HealthCheck, :health
+      head "/health", HealthCheck, :health
 
-    get "/health", HealthCheck, :health
-    head "/health", HealthCheck, :health
-
-    scope "/sign_up", SignUp do
-      post "/username_and_password", UsernameAndPassword, :sign_up
-    end
-
-    scope "/sign_in", SignIn do
-      post "/username_or_email_and_password", UsernameOrEmailAndPassword, :sign_in
-    end
-
-    scope "/user" do
-      pipe_through :user_authenticated
-
-      get "/current", User, :current
-      delete "/current", User, :sign_out
-
-      scope "/email", User do
-        post("/", Email, :create)
-        put("/confirm", Email, :confirm)
-        patch("/confirm", Email, :confirm)
-        put("/:id/primary", Email, :set_primary)
-        patch("/:id/primary", Email, :set_primary)
-        delete("/:id", Email, :delete)
+      scope "/sign_up", SignUp do
+        post "/username_and_password", UsernameAndPassword, :sign_up
       end
 
-      scope "/password", User do
-        put("/reset", Password, :reset)
-        patch("/reset", Password, :reset)
+      scope "/sign_in", SignIn do
+        post "/username_or_email_and_password", UsernameOrEmailAndPassword, :sign_in
+      end
+
+      scope "/user" do
+        pipe_through :user_authenticated
+
+        get "/current", User, :current
+        delete "/current", User, :sign_out
+
+        scope "/email", User do
+          post("/", Email, :create)
+          put("/confirm", Email, :confirm)
+          patch("/confirm", Email, :confirm)
+          put("/:id/primary", Email, :set_primary)
+          patch("/:id/primary", Email, :set_primary)
+          delete("/:id", Email, :delete)
+        end
+
+        scope "/password", User do
+          put("/reset", Password, :reset)
+          patch("/reset", Password, :reset)
+        end
       end
     end
   end

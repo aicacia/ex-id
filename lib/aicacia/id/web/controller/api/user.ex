@@ -1,4 +1,4 @@
-defmodule Aicacia.Id.Web.Controller.User do
+defmodule Aicacia.Id.Web.Controller.Api.User do
   @moduledoc tags: ["User"]
 
   use Aicacia.Id.Web, :controller
@@ -10,7 +10,7 @@ defmodule Aicacia.Id.Web.Controller.User do
   alias Aicacia.Id.Web.View
   alias Aicacia.Id.Web.Schema
 
-  action_fallback Aicacia.Id.Web.Controller.Fallback
+  action_fallback Aicacia.Id.Web.Controller.Api.Fallback
 
   @doc """
   Gets the Current User

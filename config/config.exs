@@ -41,8 +41,6 @@ config :logger, :console,
 
 config :phoenix, :json_library, Jason
 
-config :aicacia_id, Aicacia.Id.Scheduler, debug_logging: true
-
 config :peerage,
   via: Peerage.Via.Dns,
   dns_name: "localhost",

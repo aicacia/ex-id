@@ -11,8 +11,8 @@ defmodule Aicacia.Id.Service.SignIn.UsernameOrEmailAndPassword do
   schema "" do
     field(:username_or_email, :string)
     field(:password, :string)
-    field(:user_id, :binary_id)
 
+    belongs_to(:user, Model.User, type: :binary_id)
     field(:email, :string)
     field(:username, :string)
   end

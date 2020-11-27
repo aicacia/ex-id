@@ -6,7 +6,7 @@ defmodule Aicacia.Id.Service.Password.Reset do
   alias Aicacia.Id.Repo
 
   schema "" do
-    field(:user_id, :binary_id)
+    belongs_to(:user, Model.User, type: :binary_id)
     field(:old_password, :string)
     field(:password, :string)
     field(:encrypted_password, :string)
@@ -16,6 +16,7 @@ defmodule Aicacia.Id.Service.Password.Reset do
     %Service.Password.Reset{}
     |> cast(attrs, [:user_id, :old_password, :password])
     |> validate_required([:user_id, :old_password, :password])
+    |> foreign_key_constraint(:user_id)
     |> Service.Password.Create.encrypt_password()
     |> Service.Password.Create.validate_password_not_current()
     |> Service.Password.Create.validate_password_not_already_used()

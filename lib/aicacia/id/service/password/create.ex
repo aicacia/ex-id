@@ -8,7 +8,7 @@ defmodule Aicacia.Id.Service.Password.Create do
   alias Aicacia.Id.Repo
 
   schema "" do
-    field(:user_id, :binary_id)
+    belongs_to(:user, Model.User, type: :binary_id)
     field(:password, :string)
     field(:encrypted_password, :string)
   end
@@ -18,6 +18,7 @@ defmodule Aicacia.Id.Service.Password.Create do
     |> cast(attrs, [:user_id, :password])
     |> validate_required([:user_id, :password])
     |> validate_length(:password, min: 8)
+    |> foreign_key_constraint(:user_id)
     |> encrypt_password()
     |> validate_password_not_current()
     |> validate_password_not_already_used()

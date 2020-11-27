@@ -1,4 +1,4 @@
-defmodule Aicacia.Id.Web.Controller.SignUp.UsernameAndPasswordTest do
+defmodule Aicacia.Id.Web.Controller.Api.SignUp.UsernameAndPasswordTest do
   use Aicacia.Id.Web.Case
 
   setup %{conn: conn} do
@@ -13,10 +13,11 @@ defmodule Aicacia.Id.Web.Controller.SignUp.UsernameAndPasswordTest do
       conn =
         post(
           conn,
-          Routes.username_and_password_path(@endpoint, :sign_up),
+          Routes.api_username_and_password_path(@endpoint, :sign_up),
           %{
             "username" => "username",
-            "password" => "password"
+            "password" => "password",
+            "password_confirmation" => "password"
           }
         )
 
