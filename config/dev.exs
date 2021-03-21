@@ -7,9 +7,7 @@ config :aicacia_id, Aicacia.Id.Web.Endpoint,
   watchers: [
     node: [
       "node_modules/webpack/bin/webpack.js",
-      "--mode",
-      "development",
-      "--watch-stdin",
+      "watch",
       cd: Path.expand("../assets", __DIR__)
     ]
   ]
