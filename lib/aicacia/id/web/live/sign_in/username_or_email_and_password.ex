@@ -35,18 +35,26 @@ defmodule Aicacia.Id.Web.Live.SignIn.UsernameOrEmailAndPassword do
       |> UsernameOrEmailAndPassword.changeset()
       |> Map.put(:action, :insert)
 
+    IO.inspect(changeset)
     {:noreply, assign(socket, changeset: changeset)}
   end
 
   @impl true
   def handle_event("save", %{"username_or_email_and_password" => params}, socket) do
-    case Service.SignIn.UsernameOrEmailAndPassword.new!(params)
-         |> Service.SignIn.UsernameOrEmailAndPassword.handle() do
-      {:ok, user} ->
-        {:noreply, socket |> assign(user: user) |> redirect(to: "/")}
+    case Service.SignIn.UsernameOrEmailAndPassword.new(params) do
+      {:ok, command} ->
+        case Service.SignIn.UsernameOrEmailAndPassword.handle(command) do
+          {:ok, user} ->
+            {:noreply, socket |> assign(user: user) |> redirect(to: "/")}
 
-      {:error, %Ecto.InvalidChangesetError{changeset: changeset}} ->
-        {:noreply, assign(socket, changeset: changeset)}
+          {:error, %Ecto.InvalidChangesetError{changeset: changeset}} ->
+            IO.inspect(changeset)
+            {:noreply, assign(socket, changeset: changeset |> Map.put(:action, :insert))}
+        end
+
+      {:error, changeset} ->
+        IO.inspect(changeset)
+        {:noreply, assign(socket, changeset: changeset |> Map.put(:action, :insert))}
     end
   end
 end

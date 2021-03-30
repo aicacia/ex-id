@@ -7,14 +7,18 @@
     "watch": "webpack serve"
   },
   "dependencies": {
+    "bootstrap": "^5.0.0-beta3",
+    "jquery": "^3.6.0",
     "nprogress": "^0.2.0",
     "phoenix": "file:../deps/phoenix",
     "phoenix_html": "file:../deps/phoenix_html",
-    "phoenix_live_view": "file:../deps/phoenix_live_view"
+    "phoenix_live_view": "file:../deps/phoenix_live_view",
+    "popper.js": "^1.16.1"
   },
   "devDependencies": {
     "@babel/core": "^7.13.10",
     "@babel/preset-env": "^7.13.10",
+    "@types/bootstrap": "^5.0.12",
     "@types/nprogress": "^0.2.0",
     "@types/phoenix": "^1.5.1",
     "@types/phoenix_live_view": "^0.14.0",
