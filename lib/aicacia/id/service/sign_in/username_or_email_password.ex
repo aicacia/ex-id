@@ -47,12 +47,12 @@ defmodule Aicacia.Id.Service.SignIn.UsernameOrEmailAndPassword do
             validate_username_or_email_and_password_error(changeset)
 
           username ->
-            case Repo.get_by(Model.Username, username: username) do
+            case Repo.get_by(Model.User, username: username) do
               nil ->
                 validate_username_or_email_and_password_error(changeset)
 
-              username ->
-                validate_username_or_email_and_password(changeset, username.user_id)
+              user ->
+                validate_username_or_email_and_password(changeset, user.id)
             end
         end
 

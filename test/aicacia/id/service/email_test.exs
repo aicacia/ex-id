@@ -7,7 +7,7 @@ defmodule Aicacia.Id.Service.EmailTest do
 
   describe "create" do
     test "should create an email" do
-      user = Service.User.Create.handle!(%{})
+      user = Service.User.Create.handle!(%{username: "username"})
 
       email =
         %{user_id: user.id, email: "email@domain.com"}
@@ -20,7 +20,7 @@ defmodule Aicacia.Id.Service.EmailTest do
     end
 
     test "should fail on non unique email" do
-      user = Service.User.Create.handle!(%{})
+      user = Service.User.Create.handle!(%{username: "username"})
 
       %{user_id: user.id, email: "email@domain.com"}
       |> Service.Email.Create.new!()
@@ -36,7 +36,7 @@ defmodule Aicacia.Id.Service.EmailTest do
 
   describe "confirm" do
     test "should confirm an email" do
-      user = Service.User.Create.handle!(%{})
+      user = Service.User.Create.handle!(%{username: "username"})
       email = Service.Email.Create.handle!(%{user_id: user.id, email: "email@domain.com"})
 
       email_confirmation_token =
@@ -53,7 +53,7 @@ defmodule Aicacia.Id.Service.EmailTest do
 
   describe "set primary" do
     test "should set only one email as primary" do
-      user = Service.User.Create.handle!(%{})
+      user = Service.User.Create.handle!(%{username: "username"})
       email1 = Service.Email.Create.handle!(%{user_id: user.id, email: "example1@domain.com"})
       email2 = Service.Email.Create.handle!(%{user_id: user.id, email: "example2@domain.com"})
 

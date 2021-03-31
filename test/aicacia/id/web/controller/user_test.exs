@@ -5,7 +5,7 @@ defmodule Aicacia.Id.Web.Controller.UserTest do
   alias Aicacia.Id.Web.Guardian
 
   setup %{conn: conn} do
-    user = Service.User.Create.handle!(%{})
+    user = Service.User.Create.handle!(%{username: "username"})
 
     {:ok,
      user: user,

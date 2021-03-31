@@ -97,10 +97,9 @@ defmodule Aicacia.Id.Web.Controller.Api.SignIn.UsernameOrEmailPasswordTest do
   end
 
   defp create_user!() do
-    user = Service.User.Create.handle!(%{})
+    user = Service.User.Create.handle!(%{username: "username"})
 
     Service.Email.Create.handle!(%{user_id: user.id, email: "email@domain.com"})
-    Service.Username.Create.handle!(%{user_id: user.id, username: "username"})
 
     Service.Password.Create.new!(%{user_id: user.id, password: "password"})
     |> Service.Password.Create.handle!()

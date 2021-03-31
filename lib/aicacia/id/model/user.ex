@@ -6,13 +6,12 @@ defmodule Aicacia.Id.Model.User do
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "users" do
-    has_one(:username, Model.Username)
-
     has_many(:emails, Model.Email)
 
     has_one(:password, Model.Password)
     has_many(:old_passwords, Model.OldPassword)
 
+    field(:username, :string, null: false)
     field(:active, :boolean, null: false, default: true)
 
     timestamps(type: :utc_datetime)

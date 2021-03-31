@@ -5,7 +5,7 @@ defmodule Aicacia.Id.Service.PasswordTest do
 
   describe "create" do
     test "should create a password" do
-      user = Service.User.Create.handle!(%{})
+      user = Service.User.Create.handle!(%{username: "username"})
 
       password =
         %{user_id: user.id, password: "password"}
@@ -16,7 +16,7 @@ defmodule Aicacia.Id.Service.PasswordTest do
     end
 
     test "should not create a password if same as current" do
-      user = Service.User.Create.handle!(%{})
+      user = Service.User.Create.handle!(%{username: "username"})
 
       %{user_id: user.id, password: "password"}
       |> Service.Password.Create.new!()
@@ -30,7 +30,7 @@ defmodule Aicacia.Id.Service.PasswordTest do
     end
 
     test "should not create a password if already used" do
-      user = Service.User.Create.handle!(%{})
+      user = Service.User.Create.handle!(%{username: "username"})
 
       %{user_id: user.id, password: "password"}
       |> Service.Password.Create.new!()

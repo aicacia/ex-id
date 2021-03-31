@@ -5,7 +5,7 @@ defmodule Aicacia.Id.Web.Controller.Api.User.PasswordTest do
   alias Aicacia.Id.Web.Guardian
 
   setup %{conn: conn} do
-    user = Service.User.Create.handle!(%{})
+    user = Service.User.Create.handle!(%{username: "username"})
     conn = Guardian.Plug.sign_in(conn, user)
     user_token = Guardian.Plug.current_token(conn)
 

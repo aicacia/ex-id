@@ -6,8 +6,11 @@ defmodule Aicacia.Id.Repo.Migrations.CreateUsers do
       add(:id, :uuid, primary_key: true)
 
       add(:active, :boolean, default: true, null: false)
+      add(:username, :string, null: false)
 
       timestamps(type: :utc_datetime)
     end
+
+    create(unique_index(:users, [:username]))
   end
 end

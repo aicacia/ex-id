@@ -3,7 +3,6 @@ defmodule Aicacia.Id.Web.View.User do
 
   alias Aicacia.Id.Web.View.User
   alias Aicacia.Id.Web.View.Email
-  alias Aicacia.Id.Web.View.Username
 
   def render("index.json", %{users: users}) do
     render_many(users, User, "user.json")
@@ -29,7 +28,7 @@ defmodule Aicacia.Id.Web.View.User do
   def render("private_user.json", %{user: user, user_token: user_token}) do
     %{
       id: user.id,
-      username: render_username(user.username),
+      username: user.username,
       email: render_email(user.emails),
       emails:
         render_many(
@@ -42,10 +41,6 @@ defmodule Aicacia.Id.Web.View.User do
       updated_at: user.updated_at
     }
   end
-
-  defp render_username(nil), do: nil
-
-  defp render_username(username), do: render_one(username, Username, "username.json")
 
   defp render_email(emails) do
     case primary_email(emails) do

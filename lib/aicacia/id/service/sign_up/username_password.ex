@@ -20,12 +20,7 @@ defmodule Aicacia.Id.Service.SignUp.UsernameAndPassword do
 
   def handle(%{} = command) do
     Repo.run(fn ->
-      user = %{} |> Service.User.Create.new!() |> Service.User.Create.handle!()
-
-      _username =
-        %{user_id: user.id, username: command.username, primary: true}
-        |> Service.Username.Create.new!()
-        |> Service.Username.Create.handle!()
+      user = Service.User.Create.new!(command) |> Service.User.Create.handle!()
 
       _password =
         %{user_id: user.id, password: command.password}
