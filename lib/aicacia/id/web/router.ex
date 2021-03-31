@@ -1,5 +1,6 @@
 defmodule Aicacia.Id.Web.Router do
   use Aicacia.Id.Web, :router
+  use PhoenixOauth2Provider.Router, otp_app: :aicacia_id
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -43,11 +44,18 @@ defmodule Aicacia.Id.Web.Router do
     end
   end
 
+  scope "/" do
+    pipe_through :user_authenticated
+    oauth_routes()
+  end
+
   scope "/api", as: :api do
     pipe_through :api
     pipe_through :api_spec
 
     get "/swagger.json", OpenApiSpex.Plug.RenderSpec, []
+
+    oauth_api_routes()
 
     scope "/", Aicacia.Id.Web.Controller.Api do
       get "/health", HealthCheck, :health

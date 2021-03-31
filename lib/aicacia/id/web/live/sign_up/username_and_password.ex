@@ -25,7 +25,7 @@ defmodule Aicacia.Id.Web.Live.SignUp.UsernameAndPassword do
       {:ok, command} ->
         case Service.SignUp.UsernameAndPassword.handle(command) do
           {:ok, user} ->
-            {:noreply, socket |> assign(user: user) |> redirect(to: "/")}
+            {:noreply, socket |> assign(user: user) |> redirect(to: "/oauth/applications")}
 
           {:error, %Ecto.InvalidChangesetError{changeset: changeset}} ->
             {:noreply, assign(socket, changeset: changeset |> Map.put(:action, :insert))}

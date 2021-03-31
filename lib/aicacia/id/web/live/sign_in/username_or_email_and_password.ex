@@ -35,7 +35,6 @@ defmodule Aicacia.Id.Web.Live.SignIn.UsernameOrEmailAndPassword do
       |> UsernameOrEmailAndPassword.changeset()
       |> Map.put(:action, :insert)
 
-    IO.inspect(changeset)
     {:noreply, assign(socket, changeset: changeset)}
   end
 
@@ -45,7 +44,7 @@ defmodule Aicacia.Id.Web.Live.SignIn.UsernameOrEmailAndPassword do
       {:ok, command} ->
         case Service.SignIn.UsernameOrEmailAndPassword.handle(command) do
           {:ok, user} ->
-            {:noreply, socket |> assign(user: user) |> redirect(to: "/")}
+            {:noreply, socket |> assign(user: user) |> redirect(to: "/oauth/applications")}
 
           {:error, %Ecto.InvalidChangesetError{changeset: changeset}} ->
             IO.inspect(changeset)
@@ -53,7 +52,6 @@ defmodule Aicacia.Id.Web.Live.SignIn.UsernameOrEmailAndPassword do
         end
 
       {:error, changeset} ->
-        IO.inspect(changeset)
         {:noreply, assign(socket, changeset: changeset |> Map.put(:action, :insert))}
     end
   end

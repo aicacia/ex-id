@@ -63,4 +63,16 @@ config :aicacia_id, Aicacia.Id.Repo,
   hostname: database_host,
   show_sensitive_data_on_connection_error: true
 
+config :aicacia_id, ExOauth2Provider,
+  password_auth: {Aicacia.Id.Web.PasswordAuth, :authenticate},
+  repo: Aicacia.Id.Repo,
+  resource_owner: Aicacia.Id.Model.User,
+  use_refresh_token: true,
+  default_scopes: ~w(public),
+  optional_scopes: ~w(read write)
+
+config :aicacia_id, PhoenixOauth2Provider,
+  web_module: Aicacia.Id.Web,
+  current_resource_owner: :current_user
+
 import_config "#{Mix.env()}.exs"
