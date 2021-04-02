@@ -5,6 +5,7 @@ defmodule Aicacia.Id.Service.Password.Reset do
   alias Aicacia.Id.Service
   alias Aicacia.Id.Repo
 
+  @primary_key false
   schema "" do
     belongs_to(:user, Model.User, type: :binary_id)
     field(:old_password, :string)
@@ -13,7 +14,7 @@ defmodule Aicacia.Id.Service.Password.Reset do
   end
 
   def changeset(%{} = attrs) do
-    %Service.Password.Reset{}
+    %__MODULE__{}
     |> cast(attrs, [:user_id, :old_password, :password])
     |> validate_required([:user_id, :old_password, :password])
     |> foreign_key_constraint(:user_id)

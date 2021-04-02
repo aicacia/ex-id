@@ -57,8 +57,6 @@ defmodule Aicacia.Id.MixProject do
       {:peerage, "~> 1.0"},
       {:bcrypt_elixir, "~> 2.3"},
       {:guardian, "~> 2.1"},
-      {:ex_oauth2_provider, "~> 0.5"},
-      {:phoenix_oauth2_provider, "~> 0.5"},
       {:open_api_spex, "~> 3.10"},
       {:excoveralls, "~> 0.14", only: :test}
     ]

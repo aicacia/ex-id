@@ -10,7 +10,7 @@ defmodule Aicacia.Id.Service.User.Deactivate do
   end
 
   def changeset(%{} = params) do
-    %Service.User.Deactivate{}
+    %__MODULE__{}
     |> cast(params, [:id])
     |> validate_required([:id])
   end

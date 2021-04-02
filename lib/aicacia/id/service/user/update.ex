@@ -2,7 +2,6 @@ defmodule Aicacia.Id.Service.User.Update do
   use Aicacia.Handler
 
   alias Aicacia.Id.Model
-  alias Aicacia.Id.Service
   alias Aicacia.Id.Repo
 
   @username_regex ~r/[a-zA-Z0-9\-_]+/i
@@ -13,7 +12,7 @@ defmodule Aicacia.Id.Service.User.Update do
   end
 
   def changeset(%{} = params) do
-    %Service.User.Update{}
+    %__MODULE__{}
     |> cast(params, [:id, :username])
     |> validate_format(:username, @username_regex)
     |> validate_required([:id])

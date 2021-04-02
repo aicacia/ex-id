@@ -8,6 +8,7 @@ defmodule Aicacia.Id.Service.SignIn.UsernameOrEmailAndPassword do
 
   def no_match_error, do: "email or password does not match"
 
+  @primary_key false
   schema "" do
     field(:username_or_email, :string)
     field(:password, :string)
@@ -18,7 +19,7 @@ defmodule Aicacia.Id.Service.SignIn.UsernameOrEmailAndPassword do
   end
 
   def changeset(%{} = attrs) do
-    %Service.SignIn.UsernameOrEmailAndPassword{}
+    %__MODULE__{}
     |> cast(attrs, [:username_or_email, :password])
     |> validate_required([:username_or_email, :password])
     |> validate_username_or_email()

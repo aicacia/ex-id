@@ -4,9 +4,9 @@ defmodule Aicacia.Id.Service.Password.Create do
   import Ecto.Changeset
 
   alias Aicacia.Id.Model
-  alias Aicacia.Id.Service
   alias Aicacia.Id.Repo
 
+  @primary_key false
   schema "" do
     belongs_to(:user, Model.User, type: :binary_id)
     field(:password, :string)
@@ -14,7 +14,7 @@ defmodule Aicacia.Id.Service.Password.Create do
   end
 
   def changeset(%{} = attrs) do
-    %Service.Password.Create{}
+    %__MODULE__{}
     |> cast(attrs, [:user_id, :password])
     |> validate_required([:user_id, :password])
     |> validate_length(:password, min: 8)

@@ -2,16 +2,16 @@ defmodule Aicacia.Id.Service.Email.CreateConfirmationToken do
   use Aicacia.Handler
 
   alias Aicacia.Id.Model
-  alias Aicacia.Id.Service
   alias Aicacia.Id.Repo
 
+  @primary_key false
   schema "" do
     belongs_to(:user, Model.User, type: :binary_id)
     belongs_to(:email, Model.Email)
   end
 
   def changeset(%{} = attrs) do
-    %Service.Email.Create{}
+    %__MODULE__{}
     |> cast(attrs, [:user_id, :email_id])
     |> validate_required([:user_id, :email_id])
     |> foreign_key_constraint(:user_id)
@@ -25,7 +25,7 @@ defmodule Aicacia.Id.Service.Email.CreateConfirmationToken do
         %{
           user_id: command.user_id,
           email_id: command.email_id,
-          confirmation_token: confirmation_token(64)
+          confirmation_token: :crypto.strong_rand_bytes(64) |> Base.url_encode64()
         },
         [:user_id, :email_id, :confirmation_token]
       )
@@ -36,9 +36,5 @@ defmodule Aicacia.Id.Service.Email.CreateConfirmationToken do
       )
       |> Repo.insert!()
     end)
-  end
-
-  def confirmation_token(length) do
-    :crypto.strong_rand_bytes(length) |> Base.url_encode64() |> binary_part(0, length)
   end
 end

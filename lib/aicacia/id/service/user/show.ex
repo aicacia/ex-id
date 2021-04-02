@@ -3,7 +3,6 @@ defmodule Aicacia.Id.Service.User.Show do
   import Ecto.Query
 
   alias Aicacia.Id.Model
-  alias Aicacia.Id.Service
   alias Aicacia.Id.Repo
 
   @primary_key {:id, :binary_id, autogenerate: false}
@@ -11,7 +10,7 @@ defmodule Aicacia.Id.Service.User.Show do
   end
 
   def changeset(%{} = params) do
-    %Service.User.Show{}
+    %__MODULE__{}
     |> cast(params, [:id])
     |> validate_required([:id])
   end

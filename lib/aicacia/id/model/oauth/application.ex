@@ -1,10 +1,17 @@
 defmodule Aicacia.Id.Model.OAuth.Application do
   use Ecto.Schema
-  use ExOauth2Provider.Applications.Application, otp_app: :aicacia_id
 
+  alias Aicacia.Id.Model
+
+  @primary_key {:id, :binary_id, autogenerate: true}
+  @foreign_key_type :binary_id
   schema "oauth_applications" do
-    application_fields()
+    belongs_to(:owner, Model.User, type: :binary_id)
+    field :name, :string, null: false
+    field :secret, :string, null: false
+    field :redirect_uri, :string, null: false
+    field :scopes, :string, default: "", null: false
 
-    timestamps()
+    timestamps(type: :utc_datetime)
   end
 end

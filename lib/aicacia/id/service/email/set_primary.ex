@@ -3,16 +3,16 @@ defmodule Aicacia.Id.Service.Email.SetPrimary do
   import Ecto.Query
 
   alias Aicacia.Id.Model
-  alias Aicacia.Id.Service
   alias Aicacia.Id.Repo
 
+  @primary_key false
   schema "" do
     belongs_to(:user, Model.User, type: :binary_id)
     belongs_to(:email, Model.Email)
   end
 
   def changeset(%{} = attrs) do
-    %Service.Email.SetPrimary{}
+    %__MODULE__{}
     |> cast(attrs, [:user_id, :email_id])
     |> validate_required([:user_id, :email_id])
     |> foreign_key_constraint(:user_id)

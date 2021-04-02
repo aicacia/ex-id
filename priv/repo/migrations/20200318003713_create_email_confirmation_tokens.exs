@@ -3,7 +3,7 @@ defmodule Aicacia.Id.Repo.Migrations.CreateEmailConfirmationTokens do
 
   def change do
     create table(:email_confirmation_tokens) do
-      add(:user_id, references(:users, type: :uuid, on_delete: :delete_all, on_update: :nothing),
+      add(:user_id, references(:users, type: :binary_id, on_delete: :delete_all, on_update: :nothing),
         null: false
       )
 

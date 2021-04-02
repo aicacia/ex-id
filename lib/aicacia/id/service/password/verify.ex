@@ -2,12 +2,12 @@ defmodule Aicacia.Id.Service.Password.Verify do
   use Aicacia.Handler
 
   alias Aicacia.Id.Model
-  alias Aicacia.Id.Service
   alias Aicacia.Id.Repo
 
   def invalid_password_error, do: "password does not match"
   def invalid_user_id_error, do: "user_id does not exists"
 
+  @primary_key false
   schema "" do
     belongs_to(:user, Model.User, type: :binary_id)
     field(:password, :string)
@@ -15,7 +15,7 @@ defmodule Aicacia.Id.Service.Password.Verify do
   end
 
   def changeset(%{} = attrs) do
-    %Service.Password.Verify{}
+    %__MODULE__{}
     |> cast(attrs, [:user_id, :password])
     |> validate_required([:user_id, :password])
     |> validate_length(:password, min: 8)

@@ -2,17 +2,17 @@ defmodule Aicacia.Id.Service.User.Create do
   use Aicacia.Handler
 
   alias Aicacia.Id.Model
-  alias Aicacia.Id.Service
   alias Aicacia.Id.Repo
 
   @username_regex ~r/[a-zA-Z0-9\-_]+/i
 
+  @primary_key false
   schema "" do
     field(:username, :string, null: false)
   end
 
   def changeset(%{} = attrs) do
-    %Service.User.Create{}
+    %__MODULE__{}
     |> cast(attrs, [:username])
     |> validate_required([:username])
     |> validate_format(:username, @username_regex)

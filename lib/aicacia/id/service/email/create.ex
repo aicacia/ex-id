@@ -7,6 +7,7 @@ defmodule Aicacia.Id.Service.Email.Create do
 
   @email_regex ~r/^[\w.!#$%&’*+\-\/=?\^`{|}~]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*$/i
 
+  @primary_key false
   schema "" do
     belongs_to(:user, Model.User, type: :binary_id)
     field(:email, :string)
@@ -14,11 +15,12 @@ defmodule Aicacia.Id.Service.Email.Create do
   end
 
   def changeset(%{} = attrs) do
-    %Service.Email.Create{}
+    %__MODULE__{}
     |> cast(attrs, [:user_id, :email, :primary])
     |> validate_required([:user_id, :email])
-    |> foreign_key_constraint(:user_id)
     |> validate_format(:email, @email_regex)
+    |> foreign_key_constraint(:user_id)
+    |> unique_constraint(:email)
   end
 
   def handle(%{} = command) do
@@ -41,10 +43,6 @@ defmodule Aicacia.Id.Service.Email.Create do
 
       email
     end)
-  end
-
-  def confirmation_token(length) do
-    :crypto.strong_rand_bytes(length) |> Base.url_encode64() |> binary_part(0, length)
   end
 
   def email?(string) when is_binary(string) do

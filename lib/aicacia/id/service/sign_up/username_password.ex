@@ -5,6 +5,7 @@ defmodule Aicacia.Id.Service.SignUp.UsernameAndPassword do
   alias Aicacia.Id.Service
   alias Aicacia.Id.Repo
 
+  @primary_key false
   schema "" do
     field(:username, :string)
     field(:password, :string)
@@ -12,7 +13,7 @@ defmodule Aicacia.Id.Service.SignUp.UsernameAndPassword do
   end
 
   def changeset(%{} = attrs) do
-    %Service.SignUp.UsernameAndPassword{}
+    %__MODULE__{}
     |> cast(attrs, [:username, :password, :password_confirmation])
     |> validate_confirmation(:password)
     |> validate_required([:username, :password, :password_confirmation])

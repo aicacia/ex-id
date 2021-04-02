@@ -2,17 +2,17 @@ defmodule Aicacia.Id.Service.Email.Confirm do
   use Aicacia.Handler
 
   alias Aicacia.Id.Model
-  alias Aicacia.Id.Service
   alias Aicacia.Id.Repo
 
   def invalid_confirmation_token, do: "invalid confirmation token"
 
+  @primary_key false
   schema "" do
     field(:confirmation_token, :string)
   end
 
   def changeset(%{} = attrs) do
-    %Service.Email.Confirm{}
+    %__MODULE__{}
     |> cast(attrs, [:confirmation_token])
     |> validate_required([:confirmation_token])
     |> validate_confirmation_token()
