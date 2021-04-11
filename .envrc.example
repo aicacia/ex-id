@@ -1,5 +1,3 @@
 export DATABASE_HOST="aicacia-id-postgres.api"
 export SECRET_KEY_BASE="Secret key. You can use `mix phx.gen.secret` to get one"
 export GUARDIAN_TOKEN="Secret key. You can use `mix guardian.gen.secret` to get one"
-export ADMIN_PASSWORD="Admin Password"
-export URL="https://id.aicacia.com"

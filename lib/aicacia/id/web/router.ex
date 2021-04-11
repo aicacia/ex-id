@@ -83,11 +83,4 @@ defmodule Aicacia.Id.Web.Router do
       end
     end
   end
-
-  scope "/", Aicacia.Id.Web.Live do
-    pipe_through :browser
-
-    live "/sign_up/username_and_password", SignUp.UsernameAndPassword, :index
-    live "/sign_in/username_or_email_and_password", SignIn.UsernameOrEmailAndPassword, :index
-  end
 end

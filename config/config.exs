@@ -32,8 +32,7 @@ config :aicacia_id, Aicacia.Id.Web.Endpoint,
   check_origin: false,
   secret_key_base: secret_key_base,
   render_errors: [view: Aicacia.Id.Web.View.Error, accepts: ~w(html json), layout: false],
-  pubsub_server: Aicacia.Id.PubSub,
-  live_view: [signing_salt: "ozGtcOcL"]
+  pubsub_server: Aicacia.Id.PubSub
 
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",

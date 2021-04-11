@@ -25,7 +25,7 @@ defmodule Aicacia.Id.Service.Email.CreateConfirmationToken do
         %{
           user_id: command.user_id,
           email_id: command.email_id,
-          confirmation_token: :crypto.strong_rand_bytes(64) |> Base.url_encode64()
+          confirmation_token: Aicacia.Id.Util.generate_token(64)
         },
         [:user_id, :email_id, :confirmation_token]
       )
