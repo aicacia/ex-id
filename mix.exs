@@ -40,6 +40,7 @@ defmodule Aicacia.Id.MixProject do
       {:phoenix, "~> 1.5"},
       {:phoenix_pubsub, "~> 2.0"},
       {:phoenix_html, "~> 2.14"},
+      {:phoenix_live_view, "~> 0.15"},
       {:phoenix_live_dashboard, "~> 0.4", like: [:dev, :test]},
       {:floki, "~> 0.30", only: :test},
       {:telemetry_metrics, "~> 0.6"},
@@ -99,7 +100,7 @@ defmodule Aicacia.Id.MixProject do
       ],
 
       # Database
-      "ecto.setup": ["ecto.create", "ecto.migrate", "cmd npm install --prefix assets"],
+      "ecto.setup": ["ecto.create", "ecto.migrate"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate", "test"],
 

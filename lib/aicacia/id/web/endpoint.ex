@@ -1,9 +1,17 @@
 defmodule Aicacia.Id.Web.Endpoint do
   use Phoenix.Endpoint, otp_app: :aicacia_id
 
+  @session_options [
+    store: :cookie,
+    key: "_aicacia_id_key",
+    signing_salt: "R3mi5EoH"
+  ]
+
   if code_reloading? do
     plug Phoenix.CodeReloader
   end
+
+  socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
 
   socket "/socket", Aicacia.Id.Web.Socket.User,
     websocket: true,
@@ -23,6 +31,7 @@ defmodule Aicacia.Id.Web.Endpoint do
 
   plug Plug.MethodOverride
   plug Plug.Head
+  plug Plug.Session, @session_options
   plug CORSPlug
 
   plug Aicacia.Id.Web.Router
