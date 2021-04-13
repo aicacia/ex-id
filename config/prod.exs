@@ -9,7 +9,7 @@ config :logger, level: :info
 
 config :peerage,
   via: Peerage.Via.Dns,
-  dns_name: "user-aicacia-user.api"
+  dns_name: "aicacia-id.api"
 
 config :aicacia_id, Aicacia.Id.Repo,
   show_sensitive_data_on_connection_error: false,
