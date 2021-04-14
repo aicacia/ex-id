@@ -3,6 +3,7 @@ defmodule Aicacia.Id.Web.Controller.UserTest do
 
   alias Aicacia.Id.Service
   alias Aicacia.Id.Web.Guardian
+  alias Aicacia.Id.Web.Plug.UserAuthentication
 
   setup %{conn: conn} do
     user = Service.User.Create.handle!(%{username: "username"})
@@ -22,7 +23,7 @@ defmodule Aicacia.Id.Web.Controller.UserTest do
       conn =
         get(
           conn
-          |> put_req_header("authorization", user_token),
+          |> put_req_header(UserAuthentication.authorization_header(), "Bearer " <> user_token),
           Routes.api_user_path(@endpoint, :current)
         )
 
@@ -50,11 +51,11 @@ defmodule Aicacia.Id.Web.Controller.UserTest do
       conn =
         delete(
           conn
-          |> put_req_header("authorization", user_token),
+          |> put_req_header(UserAuthentication.authorization_header(), "Bearer " <> user_token),
           Routes.api_user_path(@endpoint, :sign_out)
         )
 
-      json_response(conn, 204)
+      response(conn, 204)
     end
   end
 end

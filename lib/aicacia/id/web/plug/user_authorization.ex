@@ -7,12 +7,19 @@ defmodule Aicacia.Id.Web.Plug.UserAuthentication do
 
   def authorization_header(), do: "authorization"
 
+  def get_authorization_header(conn) do
+    case(get_req_header(conn, authorization_header()) |> List.first()) do
+      nil -> nil
+      authorization -> authorization |> String.slice(7..-1)
+    end
+  end
+
   def init(opts), do: opts
 
   def call(conn, _opts) do
     authorize_connection(
       conn,
-      get_req_header(conn, authorization_header()) |> List.first()
+      get_authorization_header(conn)
     )
   end
 

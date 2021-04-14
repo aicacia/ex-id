@@ -5,6 +5,7 @@ defmodule Aicacia.Id.Web.Controller.Api.User.EmailTest do
   alias Aicacia.Id.Repo
   alias Aicacia.Id.Model
   alias Aicacia.Id.Web.Guardian
+  alias Aicacia.Id.Web.Plug.UserAuthentication
 
   setup %{conn: conn} do
     user = Service.User.Create.handle!(%{username: "username"})
@@ -15,7 +16,7 @@ defmodule Aicacia.Id.Web.Controller.Api.User.EmailTest do
      user: user,
      conn:
        conn
-       |> put_req_header("authorization", user_token)
+       |> put_req_header(UserAuthentication.authorization_header(), "Bearer " <> user_token)
        |> put_req_header("accept", "application/json")}
   end
 

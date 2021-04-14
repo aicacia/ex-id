@@ -9,6 +9,7 @@ defmodule Aicacia.Id.Web.Controller.Api.User do
   alias Aicacia.Id.Service
   alias Aicacia.Id.Web.View
   alias Aicacia.Id.Web.Schema
+  alias Aicacia.Id.Web.Plug.UserAuthentication
 
   action_fallback Aicacia.Id.Web.Controller.Api.Fallback
 
@@ -58,15 +59,11 @@ defmodule Aicacia.Id.Web.Controller.Api.User do
          no_content: "Empty response"
        ]
   def sign_out(conn, _params) do
-    user_token =
-      conn
-      |> get_req_header("authorization")
-      |> List.first()
+    user_token = UserAuthentication.get_authorization_header(conn)
 
     with {:ok, _claims} <- Guardian.revoke(user_token) do
       conn
-      |> put_status(204)
-      |> json(%{})
+      |> send_resp(204, "")
     end
   end
 
@@ -77,7 +74,7 @@ defmodule Aicacia.Id.Web.Controller.Api.User do
     user_token = Guardian.Plug.current_token(conn)
 
     conn
-    |> put_resp_header("authorization", user_token)
+    |> put_resp_header(UserAuthentication.authorization_header(), user_token)
     |> put_status(status)
     |> put_view(View.User)
     |> render("private_show.json", user: user, user_token: user_token)
