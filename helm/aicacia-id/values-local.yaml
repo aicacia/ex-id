@@ -13,7 +13,7 @@ env:
 ingress:
   annotations: {}
   hosts:
-    - host: api.user.local-k8s.com
+    - host: api.id.local-k8s.com
       paths:
         - /
   tls: []

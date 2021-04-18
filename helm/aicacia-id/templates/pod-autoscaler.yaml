@@ -1,23 +1,20 @@
 apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: { { include "aicacia-id.fullname" . } }
+  name: {{ include "aicacia-id.fullname" . }}
   labels:
-    app: { { include "aicacia-id.name" . } }
-    chart: { { include "aicacia-id.chart" . } }
-    release: { { .Release.Name } }
-    heritage: { { .Release.Service } }
+    {{- include "aicacia-id.labels" . | nindent 4 }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: { { include "aicacia-id.fullname" . } }
-  minReplicas: { { .Values.replicas.min } }
-  maxReplicas: { { .Values.replicas.max } }
+    name: {{ include "aicacia-id.fullname" . }}
+  minReplicas: {{ .Values.replicas.min }}
+  maxReplicas: {{ .Values.replicas.max }}
   metrics:
     - type: Resource
       resource:
         name: cpu
         target:
           type: Utilization
-          averageUtilization: { { .Values.replicas.resource.cpu.utilization } }
+          averageUtilization: {{ .Values.replicas.resource.cpu.utilization }}
