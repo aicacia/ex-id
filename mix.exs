@@ -110,6 +110,15 @@ defmodule Aicacia.Id.MixProject do
       "docker.sha256": [
         ~s(cmd docker inspect --format='"{{index .Id}}"' #{docker_tag()})
       ],
+      "docker.run": [
+        "cmd docker run --name #{name()} --network=host " <>
+          "-e DATABASE_HOST=$DATABASE_HOST " <>
+          " -e SECRET_KEY_BASE=$SECRET_KEY_BASE " <>
+          " -e GUARDIAN_TOKEN=$GUARDIAN_TOKEN " <>
+          " -e MIX_ENV=#{Mix.env()} " <>
+          "-p 4000:4000 #{docker_tag()}"
+      ],
+      "docker.delete": ["cmd docker rm -f #{name()}"],
 
       # Helm
       "helm.delete": ["cmd helm delete --namespace #{namespace()} #{name()}"],

@@ -1,8 +1,6 @@
 use Mix.Config
 
-config :aicacia_id, Aicacia.Id.Web.Endpoint,
-  http: [:inet6, port: 4000],
-  url: [host: "localhost", port: 4000]
+config :aicacia_id, Aicacia.Id.Web.Endpoint, http: [port: 4000]
 
 config :logger, level: :info
 
