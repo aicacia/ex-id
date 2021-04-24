@@ -11,7 +11,7 @@ defmodule Aicacia.Id.Model.User do
     has_one(:password, Model.Password)
     has_many(:old_passwords, Model.OldPassword)
 
-    has_many(:applications, Model.Application)
+    has_many(:applications, Model.Application, foreign_key: :owner_id)
 
     field(:username, :string, null: false)
     field(:active, :boolean, null: false, default: true)
