@@ -21,14 +21,14 @@ defmodule Aicacia.Id.Service.SignUp.UsernameAndPassword do
 
   def handle(%{} = command) do
     Repo.run(fn ->
-      user = Service.User.Create.new!(command) |> Service.User.Create.handle!()
+      user = Service.User.Create.create_user!(command)
 
       _password =
         %{user_id: user.id, password: command.password}
         |> Service.Password.Create.new!()
         |> Service.Password.Create.handle!()
 
-      Service.User.Show.handle!(%{id: user.id})
+      Service.User.Show.get_user!(user.id)
     end)
   end
 end

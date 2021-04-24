@@ -2,7 +2,6 @@ defmodule Aicacia.Id.Service.User.Deactivate do
   use Aicacia.Handler
 
   alias Aicacia.Id.Model
-  alias Aicacia.Id.Service
   alias Aicacia.Id.Repo
 
   @primary_key {:id, :binary_id, autogenerate: false}
@@ -21,8 +20,7 @@ defmodule Aicacia.Id.Service.User.Deactivate do
       |> cast(%{id: command.id, active: false}, [:id, :active])
       |> validate_required([:id, :active])
       |> Repo.update!()
-
-      Service.User.Show.handle!(%{id: command.id})
+      |> Repo.preload([:emails, :password])
     end)
   end
 end

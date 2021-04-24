@@ -70,6 +70,23 @@ defmodule Aicacia.Id.Web.Schema.User do
     })
   end
 
+  defmodule UsernameUpdate do
+    require OpenApiSpex
+
+    OpenApiSpex.schema(%{
+      title: "User.UsernameUpdate",
+      description: "update user's username",
+      type: :object,
+      properties: %{
+        username: %Schema{type: :string, description: "username"}
+      },
+      required: [:username],
+      example: %{
+        "username" => "username"
+      }
+    })
+  end
+
   defmodule Private do
     require OpenApiSpex
 

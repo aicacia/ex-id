@@ -2,16 +2,16 @@ defmodule Aicacia.Id.Web.Router do
   use Aicacia.Id.Web, :router
 
   pipeline :browser do
-    plug :accepts, ["html"]
-    plug :fetch_session
-    plug :fetch_live_flash
-    plug :put_root_layout, {Aicacia.Id.Web.View.Layout, :root}
-    plug :protect_from_forgery
-    plug :put_secure_browser_headers
+    plug(:accepts, ["html"])
+    plug(:fetch_session)
+    plug(:fetch_live_flash)
+    plug(:put_root_layout, {Aicacia.Id.Web.View.Layout, :root})
+    plug(:protect_from_forgery)
+    plug(:put_secure_browser_headers)
   end
 
   pipeline :api do
-    plug :accepts, ["json"]
+    plug(:accepts, ["json"])
   end
 
   pipeline :user_authenticated do
@@ -19,53 +19,55 @@ defmodule Aicacia.Id.Web.Router do
   end
 
   pipeline :api_spec do
-    plug OpenApiSpex.Plug.PutApiSpec, module: Aicacia.Id.Web.ApiSpec
+    plug(OpenApiSpex.Plug.PutApiSpec, module: Aicacia.Id.Web.ApiSpec)
   end
 
   scope "/swagger" do
-    pipe_through :browser
+    pipe_through(:browser)
 
-    get "/", OpenApiSpex.Plug.SwaggerUI,
+    get("/", OpenApiSpex.Plug.SwaggerUI,
       path: "/api/swagger.json",
       default_model_expand_depth: 10,
       display_operation_id: true
+    )
   end
 
   if Mix.env() in [:dev, :test] do
     import Phoenix.LiveDashboard.Router
 
     scope "/dashboard" do
-      pipe_through :browser
+      pipe_through(:browser)
 
-      live_dashboard "/",
+      live_dashboard("/",
         metrics: Aicacia.Id.Web.Telemetry,
         ecto_repos: [Aicacia.Id.Repo]
+      )
     end
   end
 
   scope "/api", as: :api do
-    pipe_through :api
-    pipe_through :api_spec
+    pipe_through(:api)
+    pipe_through(:api_spec)
 
-    get "/swagger.json", OpenApiSpex.Plug.RenderSpec, []
+    get("/swagger.json", OpenApiSpex.Plug.RenderSpec, [])
 
     scope "/", Aicacia.Id.Web.Controller.Api do
-      get "/health", HealthCheck, :health
-      head "/health", HealthCheck, :health
+      get("/health", HealthCheck, :health)
+      head("/health", HealthCheck, :health)
 
       scope "/sign_up", SignUp do
-        post "/username_and_password", UsernameAndPassword, :sign_up
+        post("/username_and_password", UsernameAndPassword, :sign_up)
       end
 
       scope "/sign_in", SignIn do
-        post "/username_or_email_and_password", UsernameOrEmailAndPassword, :sign_in
+        post("/username_or_email_and_password", UsernameOrEmailAndPassword, :sign_in)
       end
 
       scope "/user" do
-        pipe_through :user_authenticated
+        pipe_through(:user_authenticated)
 
-        get "/current", User, :current
-        delete "/current", User, :sign_out
+        get("/current", User, :current)
+        delete("/current", User, :sign_out)
 
         scope "/email", User do
           post("/", Email, :create)
@@ -74,6 +76,11 @@ defmodule Aicacia.Id.Web.Router do
           put("/:id/primary", Email, :set_primary)
           patch("/:id/primary", Email, :set_primary)
           delete("/:id", Email, :delete)
+        end
+
+        scope "/username", User do
+          put("/", Username, :update)
+          patch("/", Username, :update)
         end
 
         scope "/password", User do

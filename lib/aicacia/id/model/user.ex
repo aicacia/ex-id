@@ -11,6 +11,8 @@ defmodule Aicacia.Id.Model.User do
     has_one(:password, Model.Password)
     has_many(:old_passwords, Model.OldPassword)
 
+    has_many(:applications, Model.Application)
+
     field(:username, :string, null: false)
     field(:active, :boolean, null: false, default: true)
 

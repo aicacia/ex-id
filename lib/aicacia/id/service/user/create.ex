@@ -6,6 +6,8 @@ defmodule Aicacia.Id.Service.User.Create do
 
   @username_regex ~r/[a-zA-Z0-9\-_]+/i
 
+  def username_regex, do: @username_regex
+
   @primary_key false
   schema "" do
     field(:username, :string, null: false)
@@ -21,6 +23,7 @@ defmodule Aicacia.Id.Service.User.Create do
   def handle(%{} = command) do
     Repo.run(fn ->
       create_user!(command)
+      |> Repo.preload([:emails, :password])
     end)
   end
 

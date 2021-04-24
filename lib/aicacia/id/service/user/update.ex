@@ -3,8 +3,7 @@ defmodule Aicacia.Id.Service.User.Update do
 
   alias Aicacia.Id.Model
   alias Aicacia.Id.Repo
-
-  @username_regex ~r/[a-zA-Z0-9\-_]+/i
+  alias Aicacia.Id.Service
 
   @primary_key {:id, :binary_id, autogenerate: false}
   schema "" do
@@ -14,7 +13,7 @@ defmodule Aicacia.Id.Service.User.Update do
   def changeset(%{} = params) do
     %__MODULE__{}
     |> cast(params, [:id, :username])
-    |> validate_format(:username, @username_regex)
+    |> validate_format(:username, Service.User.Create.username_regex())
     |> validate_required([:id])
   end
 
@@ -27,6 +26,7 @@ defmodule Aicacia.Id.Service.User.Update do
       )
       |> unique_constraint(:username)
       |> Repo.update!()
+      |> Repo.preload([:emails, :password])
     end)
   end
 end

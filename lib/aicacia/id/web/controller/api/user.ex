@@ -11,7 +11,7 @@ defmodule Aicacia.Id.Web.Controller.Api.User do
   alias Aicacia.Id.Web.Schema
   alias Aicacia.Id.Web.Plug.UserAuthentication
 
-  action_fallback Aicacia.Id.Web.Controller.Api.Fallback
+  action_fallback(Aicacia.Id.Web.Controller.Api.Fallback)
 
   @doc """
   Gets the Current User
@@ -40,13 +40,14 @@ defmodule Aicacia.Id.Web.Controller.Api.User do
        ]
   def deactivate(conn, _params) do
     user = conn.assigns[:user]
+    user_token = conn.assigns[:user_token]
 
     with {:ok, command} <- Service.User.Deactivate.new(%{user_id: user.id}),
          {:ok, user} <- Service.User.Deactivate.handle(command) do
       conn
       |> put_status(200)
       |> put_view(View.User)
-      |> render("private_show.json", user: user)
+      |> render("private_show.json", user: user, user_token: user_token)
     end
   end
 

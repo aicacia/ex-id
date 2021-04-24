@@ -6,7 +6,8 @@ defmodule Aicacia.Id.Web.ApiSpec do
     do:
       %OpenApiSpex.OpenApi{
         servers: [
-          OpenApiSpex.Server.from_endpoint(Aicacia.Id.Web.Endpoint)
+          OpenApiSpex.Server.from_endpoint(Aicacia.Id.Web.Endpoint),
+          "https://api.id.aicacia.com"
         ],
         info: %OpenApiSpex.Info{
           title: Application.spec(:aicacia_id, :description) |> to_string(),

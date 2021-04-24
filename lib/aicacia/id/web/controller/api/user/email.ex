@@ -9,7 +9,7 @@ defmodule Aicacia.Id.Web.Controller.Api.User.Email do
   alias Aicacia.Id.Web.View
   alias Aicacia.Id.Web.Schema
 
-  action_fallback Controller.Api.Fallback
+  action_fallback(Controller.Api.Fallback)
 
   @doc """
   Confirm an Eamil

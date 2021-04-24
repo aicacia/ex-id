@@ -17,11 +17,15 @@ defmodule Aicacia.Id.Service.User.Show do
 
   def handle(%{} = command) do
     Repo.run(fn ->
+      get_user!(command.id)
+    end)
+  end
+
+  def get_user!(id),
+    do:
       from(u in Model.User,
-        where: u.id == ^command.id,
+        where: u.id == ^id,
         preload: [:emails, :password]
       )
       |> Repo.one!()
-    end)
-  end
 end
